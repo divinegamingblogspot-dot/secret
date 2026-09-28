@@ -65,7 +65,7 @@ async function sharePage(){
  try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toast('Page link copied ✦')}}catch(e){}
 }
 $('#shareBtn').onclick=sharePage;
-$('#copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Page link copied ✦')}catch(e){toast('Copy the address from your browser')}}};
+$('#copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);toast('Page link copied ✦')}catch(e){toast('Copy the address from your browser')}};
 
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){if($('.modal').classList.contains('open'))$('.close').click();if($('#lightbox').classList.contains('open'))closeLight()}
