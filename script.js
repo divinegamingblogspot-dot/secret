@@ -17,3 +17,17 @@ const secrets=["Some girls have a look. Pia has an atmosphere.","Keep the confid
 $$(".sky button").forEach(b=>b.addEventListener("click",()=>{$("#starText").textContent=b.dataset.star}));
 let down=false,lx=0,ly=0,rx=0,ry=0;const ms=$("#moonStage"),moon=$("#moonStage .big-moon");const paint=()=>moon.style.transform="rotateX("+rx+"deg) rotateY("+ry+"deg)";ms?.addEventListener("pointerdown",e=>{down=true;lx=e.clientX;ly=e.clientY;ms.setPointerCapture?.(e.pointerId)});ms?.addEventListener("pointermove",e=>{if(!down)return;ry=Math.max(-30,Math.min(30,ry+(e.clientX-lx)*.25));rx=Math.max(-20,Math.min(20,rx-(e.clientY-ly)*.18));lx=e.clientX;ly=e.clientY;paint()});["pointerup","pointercancel"].forEach(x=>ms?.addEventListener(x,()=>down=false));$("#moonlight")?.addEventListener("click",()=>{document.body.classList.toggle("moonlight-mode");toast(document.body.classList.contains("moonlight-mode")?"Moonlight on ☾":"Moonlight off")});
 $("#top")?.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#modal")?.classList.remove("open");if(e.key.toLowerCase()==="t")setTheme(themeIndex+1)});
+// cinematic interaction layer
+(()=>{
+ const progress=document.createElement("div");progress.className="scroll-progress";document.body.appendChild(progress);
+ const glow=document.createElement("div");glow.className="cursor-glow";document.body.appendChild(glow);
+ addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+"%";},{passive:true});
+ addEventListener("pointermove",e=>{if(innerWidth<700)return;glow.style.opacity=".8";glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";},{passive:true});
+ addEventListener("pointerleave",()=>glow.style.opacity="0");
+ const tilt=el=>{el.addEventListener("pointermove",e=>{if(innerWidth<700)return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform="perspective(700px) rotateX("+(-y*5)+"deg) rotateY("+(x*5)+"deg) translateY(-5px)";},{passive:true});el.addEventListener("pointerleave",()=>el.style.transform="");};
+ $$(".energy-grid article,.memory,.photo,.note,.attitude-grid article,.ribbon article").forEach(tilt);
+ const burst=(x,y)=>{for(let i=0;i<12;i++){const s=document.createElement("span");s.className="heart-particle";s.textContent=i%3===0?"♡":"✦";s.style.left=x+"px";s.style.top=y+"px";s.style.setProperty("--dx",(Math.random()*150-75)+"px");s.style.setProperty("--rot",(Math.random()*80-40)+"deg");document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}};
+ let count=Number(localStorage.getItem("piaAdmireCount")||0);const counter=document.createElement("div");counter.className="love-counter";counter.innerHTML="<span>♡</span><b>"+count+"</b><small>little moments</small>";document.body.appendChild(counter);
+ document.addEventListener("click",e=>{const b=e.target.closest("#compliment,#love,.photo,.note,.memory");if(!b)return;if(b.matches("#compliment,#love")){count++;localStorage.setItem("piaAdmireCount",count);counter.querySelector("b").textContent=count;burst(e.clientX,e.clientY)}});
+ const moon=document.querySelector(".big-moon");if(moon){let t=0;setInterval(()=>{if(!document.hidden){t+=.012;moon.style.filter="drop-shadow(0 0 "+(25+Math.sin(t)*10)+"px rgba(244,210,141,.18))"}},40)}
+})();
