@@ -1,7 +1,7 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const toast=m=>{const t=$('.toast');t.textContent=m;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2400)};
-const themes=['','rose','lavender','cream'],themeNames=['Midnight mode','Rose mode','Lavender mode','Cream mode'];
-let themeIndex=Number(localStorage.getItem('piaTheme')||0);
+const themes=['cream','champagne','blush','pearl'],themeNames=['Cream mode','Champagne mode','Blush mode','Pearl mode'];
+let themeIndex=Math.max(0,Math.min(3,Number(localStorage.getItem('piaTheme')||0)));
 function setTheme(i,silent=false){themeIndex=(i+themes.length)%themes.length;document.documentElement.dataset.theme=themes[themeIndex];localStorage.setItem('piaTheme',themeIndex);if(!silent)toast(themeNames[themeIndex])}
 setTheme(themeIndex,true);
 
@@ -76,3 +76,5 @@ document.addEventListener('keydown',e=>{
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
 
 const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The garden is blooming ✦':'Bloom mode off')};
+const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The bouquet is blooming ✦':'Bloom mode off')};
+const ps=document.querySelector('#privateSetup');if(ps)ps.onclick=()=>toast('Private gallery needs a storage backend + two-person login to sync safely.');
