@@ -1,1 +1,1 @@
-{"name":"Pia — The Moment","short_name":"Pia","start_url":"./","display":"standalone","background_color":"#09070a","theme_color":"#09070a","description":"A playful appreciation page for Pia."}
+{"name":"Pia — The Moment","short_name":"Pia","start_url":"./","scope":"./","display":"standalone","background_color":"#09070a","theme_color":"#09070a","description":"A playful cinematic appreciation page for Pia.","icons":[{"src":"favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
