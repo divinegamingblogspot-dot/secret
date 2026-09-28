@@ -76,5 +76,4 @@ document.addEventListener('keydown',e=>{
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(()=>{}));}
 
 const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The garden is blooming ✦':'Bloom mode off')};
-const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The bouquet is blooming ✦':'Bloom mode off')};
 const ps=document.querySelector('#privateSetup');if(ps)ps.onclick=()=>toast('Private gallery needs a storage backend + two-person login to sync safely.');
