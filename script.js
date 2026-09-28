@@ -11,8 +11,8 @@ mystery:["MYSTERY SIDE","Leave a little unsaid.","Some energy is better felt tha
 playful:["PLAYFUL SIDE","Pretty with a plot twist.","The laugh, the chaos, the tiny mischief — all part of the magic."]
 };
 const experienceStage=$("#experienceStage"),label=$("#moodLabel"),title=$("#moodTitle"),copy=$("#moodText");
-function setMood(name){const m=moods[name]||moods.soft;experienceStage.dataset.mood=name;label.textContent=m[0];title.textContent=m[1];copy.textContent=m[2];$(".mood").forEach(b=>b.classList.toggle("active",b.dataset.mood===name))}
-$(".mood").forEach(b=>b.onclick=()=>setMood(b.dataset.mood));
+function setMood(name){const m=moods[name]||moods.soft;experienceStage.dataset.mood=name;label.textContent=m[0];title.textContent=m[1];copy.textContent=m[2];$$(".mood").forEach(b=>b.classList.toggle("active",b.dataset.mood===name))}
+$$(".mood").forEach(b=>b.onclick=()=>setMood(b.dataset.mood));
 $("#moodSurprise").onclick=()=>{const keys=Object.keys(moods);setMood(keys[Math.floor(Math.random()*keys.length)]);toast("A different side of Pia ✦")};
 $(".memory-card").forEach((b,i)=>b.onclick=()=>toast(["A moment worth keeping ✦","That laugh deserves its own frame ♡","The little things are often the biggest things.","Leave room for the next beautiful memory ✦"][i]));
 $("#secretReveal").onclick=()=>{const messages=["Some girls have a look. Pia has an atmosphere.","A little mystery makes every story more interesting ✦","She deserves compliments on ordinary days too.","Keep the confidence. Keep the softness. Keep the sparkle.","This corner of the internet is officially a Pia appreciation zone. ♡"];$("#secretMessage").textContent=messages[Math.floor(Math.random()*messages.length)];$("#secretReveal").animate([{transform:"scale(1) rotate(0)"},{transform:"scale(1.2) rotate(18deg)"},{transform:"scale(1) rotate(0)"}],{duration:500});toast("Secret unlocked ✦")};
