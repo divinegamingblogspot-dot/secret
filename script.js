@@ -74,3 +74,5 @@ document.addEventListener('keydown',e=>{
 });
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+
+const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The garden is blooming ✦':'Bloom mode off')};
