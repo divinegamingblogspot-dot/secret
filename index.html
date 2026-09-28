@@ -1,54 +1,111 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#09070a"><meta name="description" content="A little digital appreciation page for Pia — beauty, confidence, style and unforgettable energy.">
-<meta property="og:title" content="Pia — The Moment"><meta property="og:description" content="A tiny corner of the internet dedicated to Pia.">
-<title>Pia — The Moment</title><link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09070a">
+<meta name="description" content="Pia — a cinematic little corner for beauty, confidence, style and unforgettable energy.">
+<meta property="og:title" content="Pia — The Moment">
+<meta property="og:description" content="A tiny corner of the internet dedicated to Pia.">
+<title>Pia — The Moment</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="progress"></div>
-<header class="top"><a class="brand" href="#">Pia <b>✦</b></a><nav class="nav"><a class="hide-m" href="#her">Her</a><a class="hide-m" href="#gallery">Gallery</a><a class="hide-m" href="#fun">Fun</a><button class="tool theme" aria-label="Change theme">◐</button><a href="https://www.instagram.com/piaswami03/" target="_blank" rel="noopener">@piaswami03 ↗</a></nav></header>
-<main>
-<section class="hero"><div class="orb"></div><div class="orb2"></div><div class="reveal">
-<div class="eyebrow">A private little appreciation page</div>
+<div class="loader" id="loader" aria-hidden="true"><div class="loader-logo"><span>P</span><i>✦</i></div><div class="loader-line"><b></b></div><small>ENTERING PIA'S WORLD</small></div>
+<div class="cursor-glow" aria-hidden="true"></div><div class="progress"></div>
+<div class="sparkles" aria-hidden="true"></div>
+
+<header class="top" id="top">
+<a class="brand" href="#home" aria-label="Pia home"><span class="mini-logo">P</span><span>Pia</span><b>✦</b></a>
+<nav class="nav" aria-label="Main navigation">
+<a class="hide-m nav-link" href="#her">Her</a><a class="hide-m nav-link" href="#gallery">Gallery</a><a class="hide-m nav-link" href="#vibe">Vibe</a><a class="hide-m nav-link" href="#notes">Notes</a>
+<button class="tool" id="shareBtn" aria-label="Share page">↗</button><button class="tool theme" aria-label="Change theme">◐</button>
+<a class="insta" href="https://www.instagram.com/piaswami03/" target="_blank" rel="noopener">@piaswami03 ↗</a>
+</nav>
+</header>
+
+<main id="home">
+<section class="hero">
+<div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div><div class="hero-grid"></div>
+<div class="hero-content reveal">
+<div class="profile-wrap" data-tilt>
+<div class="profile-ring"></div><div class="profile-logo"><span>P</span><i>✦</i></div><div class="status-dot"></div>
+</div>
+<div class="eyebrow">A private little appreciation page · 03</div>
 <h1>She is<br><em>the moment.</em></h1>
 <p>Some people are beautiful. Some have presence. Pia somehow manages to have both — with a smile, confidence, style and curves that make looking twice feel completely understandable.</p>
-<div class="actions"><a class="primary" href="#her">See what makes her her ↓</a><button class="ghost surprise">Give me a compliment ✦</button></div>
-</div></section>
-
-<section id="her" class="reveal"><div class="section-head"><div><div class="kicker">01 / Her effect</div><h2>Pretty face.<br><em>Unfair presence.</em></h2></div><p class="lead">It starts with the smile, stays for the eyes, and then you notice the confidence. The kind of confidence that makes every outfit, every pose and every little moment feel more memorable.</p></div>
-<div class="cards">
-<article class="card"><div class="num">01</div><h3>The smile</h3><p>The kind that turns an ordinary picture into the one you keep coming back to.</p></article>
-<article class="card"><div class="num">02</div><h3>The confidence</h3><p>There is something ridiculously attractive about someone who knows exactly how to carry herself.</p></article>
-<article class="card"><div class="num">03</div><h3>The curves</h3><p>Some silhouettes simply deserve a second look — especially when the person wearing them knows it.</p></article>
-</div></section>
-
-<section id="gallery" class="reveal"><div class="section-head"><div><div class="kicker">02 / Her gallery</div><h2>Let the pictures<br><em>do the flirting.</em></h2></div><p class="lead">A cinematic home for the photos and reels she actually chooses to feature. Replace the slots below with her selected media.</p></div>
-<div class="gallery">
-<div class="photo"><span class="tag">01 · FEATURED</span><div class="slot"><div><strong>Her favourite photo</strong>Drop a chosen image here.</div></div></div>
-<div><div class="photo small"><span class="tag">02 · LOOK</span><div class="slot"><div><strong>The outfit</strong>A favourite look or portrait.</div></div></div><div style="height:14px"></div><div class="photo small"><span class="tag">03 · REEL</span><div class="slot"><div><strong>The moment</strong>A reel or short video she wants here.</div></div></div></div>
+<div class="actions"><a class="primary magnetic" href="#her">Enter her world ↓</a><button class="ghost magnetic surprise">Give me a compliment ✦</button></div>
+<div class="scroll-cue"><span></span>scroll slowly</div>
 </div>
 </section>
 
-<section class="reveal"><div class="kicker">03 / Things that deserve attention</div><h2>Face. Style. <em>Figure.</em><br>Attitude.</h2><div class="fun-grid">
-<div class="fun"><b>That smile</b><span>Dangerously effective.</span></div>
-<div class="fun"><b>Those eyes</b><span>Hard to ignore.</span></div>
-<div class="fun"><b>That silhouette</b><span>Outfits don't stand a chance.</span></div>
-<div class="fun"><b>That confidence</b><span>Probably the hottest part.</span></div>
-<div class="fun"><b>The little poses</b><span>Camera knows the assignment.</span></div>
-<div class="fun"><b>The glow</b><span>Zero editing required.</span></div>
-<div class="fun"><b>The energy</b><span>Pretty with personality.</span></div>
-<div class="fun"><b>The whole package</b><span>Yeah, that's the problem.</span></div>
-</div></section>
+<section id="her" class="reveal">
+<div class="section-head"><div><div class="kicker">01 / Her effect</div><h2>Pretty face.<br><em>Unfair presence.</em></h2></div><p class="lead">It starts with the smile, stays for the eyes, and then you notice the confidence. The kind that makes every outfit, pose and little moment feel more memorable.</p></div>
+<div class="cards">
+<article class="card" data-tilt><div class="num">01</div><span class="card-icon">♡</span><h3>The smile</h3><p>The kind that turns an ordinary picture into the one you keep coming back to.</p><span class="card-arrow">↗</span></article>
+<article class="card" data-tilt><div class="num">02</div><span class="card-icon">✦</span><h3>The confidence</h3><p>There is something ridiculously attractive about someone who knows exactly how to carry herself.</p><span class="card-arrow">↗</span></article>
+<article class="card" data-tilt><div class="num">03</div><span class="card-icon">⌁</span><h3>The curves</h3><p>Some silhouettes simply deserve a second look — especially when the person wearing them knows it.</p><span class="card-arrow">↗</span></article>
+</div>
+</section>
 
-<section class="reveal"><div class="quote">“Beautiful gets attention. Confidence keeps it. And somehow, she has both.”<small>— the unofficial Pia appreciation department</small></div></section>
+<section id="gallery" class="reveal">
+<div class="section-head"><div><div class="kicker">02 / Her gallery</div><h2>Let the pictures<br><em>do the flirting.</em></h2></div><p class="lead">A cinematic home for the photos and reels she actually chooses to feature. The media slots are ready for your own images.</p></div>
+<div class="gallery">
+<button class="photo featured media-slot" data-label="Featured photo"><span class="tag">01 · FEATURED</span><div class="slot"><span class="slot-number">01</span><strong>Her favourite photo</strong><small>Drop a chosen image into this slot.</small><em>tap to preview</em></div></button>
+<div class="gallery-stack">
+<button class="photo small media-slot" data-label="Look"><span class="tag">02 · LOOK</span><div class="slot"><span class="slot-number">02</span><strong>The outfit</strong><small>A favourite look or portrait.</small><em>tap to preview</em></div></button>
+<button class="photo small media-slot" data-label="Reel"><span class="tag">03 · REEL</span><div class="slot"><span class="slot-number">03</span><strong>The moment</strong><small>A reel or short video she wants here.</small><em>tap to preview</em></div></button>
+</div>
+</div>
+<div class="gallery-note"><span>✦</span> Replace these visual slots with media you choose to feature. Everything else is already styled around them.</div>
+</section>
 
-<section class="reveal"><div class="section-head"><div><div class="kicker">04 / Make it hers</div><h2>Choose a mood.<br><em>Make it feel like Pia.</em></h2></div><p class="lead">Tap the theme button in the top bar to cycle through Midnight, Rose, Lavender and Cream. The choice is saved automatically on this device.</p></div>
-<div class="toolbar"><button class="primary theme">Change the whole mood</button><a class="ghost" href="https://www.instagram.com/piaswami03/" target="_blank" rel="noopener">Visit Instagram ↗</a></div></section>
+<section id="vibe" class="reveal">
+<div class="kicker">03 / Things that deserve attention</div><h2>Face. Style. <em>Figure.</em><br>Attitude.</h2>
+<div class="fun-grid">
+<button class="fun"><b>That smile</b><span>Dangerously effective.</span><i>01</i></button>
+<button class="fun"><b>Those eyes</b><span>Hard to ignore.</span><i>02</i></button>
+<button class="fun"><b>That silhouette</b><span>Outfits don't stand a chance.</span><i>03</i></button>
+<button class="fun"><b>That confidence</b><span>Probably the hottest part.</span><i>04</i></button>
+<button class="fun"><b>The little poses</b><span>Camera knows the assignment.</span><i>05</i></button>
+<button class="fun"><b>The glow</b><span>Zero editing required.</span><i>06</i></button>
+<button class="fun"><b>The energy</b><span>Pretty with personality.</span><i>07</i></button>
+<button class="fun"><b>The whole package</b><span>Yeah, that's the problem.</span><i>08</i></button>
+</div>
+</section>
+
+<section class="reveal quote-section"><div class="quote"><span class="quote-mark">“</span><div id="quoteText">Beautiful gets attention. Confidence keeps it. And somehow, she has both.</div><small>— the unofficial Pia appreciation department</small><button class="quote-refresh" id="quoteRefresh" aria-label="New quote">↻</button></div></section>
+
+<section id="notes" class="reveal">
+<div class="section-head"><div><div class="kicker">04 / Little details</div><h2>The details<br><em>make the mood.</em></h2></div><p class="lead">A few tiny interactions turn this from a page into a little experience — with a theme memory, ambient effects, share button, active sections and a few surprises.</p></div>
+<div class="details-grid">
+<div class="detail panel"><span>01</span><strong>Soft glow</strong><small>Ambient light follows your pointer.</small></div>
+<div class="detail panel"><span>02</span><strong>Theme memory</strong><small>Your chosen mood stays on this device.</small></div>
+<div class="detail panel"><span>03</span><strong>Scroll theatre</strong><small>Sections reveal gently as you move.</small></div>
+<div class="detail panel"><span>04</span><strong>Keyboard ready</strong><small>Press T to change mood · Esc closes popups.</small></div>
+<div class="detail panel"><span>05</span><strong>Shareable</strong><small>Uses the device share sheet when available.</small></div>
+<div class="detail panel"><span>06</span><strong>Mobile first</strong><small>Designed to feel clean on small screens too.</small></div>
+</div>
+</section>
+
+<section class="reveal final-section">
+<div class="final-card" data-tilt>
+<div class="final-glow"></div><div class="mini-logo large">P<i>✦</i></div>
+<div class="kicker">05 / Final thought</div><h2>Some pages are visited.<br><em>This one is felt.</em></h2>
+<p>Keep the photos you love, the mood you want, and the little details that make it unmistakably hers.</p>
+<div class="toolbar"><a class="primary magnetic" href="https://www.instagram.com/piaswami03/" target="_blank" rel="noopener">Open @piaswami03 ↗</a><button class="ghost magnetic surprise">One last compliment ✦</button></div>
+</div>
+</section>
 </main>
-<footer>Made with <span class="heart">♥</span> as a playful appreciation page · @piaswami03</footer>
+
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+<footer><div class="footer-logo"><span>P</span> ✦</div><strong>Pia</strong><span>Made with <b>♥</b> as a playful appreciation page · @piaswami03</span><button id="copyBtn">Copy page link</button></footer>
+
 <div class="toast" role="status"></div>
-<div class="modal" aria-hidden="true"><div class="modal-box"><button class="close" aria-label="Close">×</button><div class="kicker">Pia appreciation generator</div><h3>Pretty face, dangerous confidence.</h3><p>Press again whenever you need another completely unofficial reason to admire her.</p><button class="primary surprise">Again ✦</button></div></div>
+<div class="modal" aria-hidden="true"><div class="modal-box"><button class="close" aria-label="Close">×</button><div class="modal-spark">✦</div><div class="kicker">Pia appreciation generator</div><h3>Pretty face, dangerous confidence.</h3><p>Press again whenever you need another completely unofficial reason to admire her.</p><button class="primary surprise">Again ✦</button></div></div>
+<div class="lightbox" id="lightbox" aria-hidden="true"><button class="lightbox-close" aria-label="Close">×</button><div class="lightbox-card"><div class="fake-photo"><span>YOUR MEDIA</span><b id="lightboxTitle">Featured</b></div><small>Replace the selected slot with your chosen photo or reel.</small></div></div>
 <script src="script.js"></script>
-</body></html>
+</body>
+</html>
