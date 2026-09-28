@@ -27,12 +27,12 @@ const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){nav
 sections.forEach(s=>navIO.observe(s));
 
 const messages=[
-'Okay, the smile is doing a lot of work here.','Confidence looks suspiciously good on her.',
+'That smile belongs in a gallery.','Her confidence makes every frame feel intentional.',
 'That outfit understood the assignment.','The camera clearly has a favourite.',
-'Pretty face, dangerous levels of presence.','She somehow makes “effortless” look expensive.',
-'One more photo? Absolutely.','Respectfully: that silhouette is unfair.',
-'The real flex is how naturally she carries it.','Yeah… we get why people look twice.',
-'The glow is not exactly playing fair.','That look has absolutely no business being that effective.'
+'Pretty face, memorable presence.','She makes effortless look beautifully put together.',
+'One more photo? Absolutely.','That style deserves its own highlight.',
+'The real flex is how naturally she carries it.','Some moments are impossible not to remember.',
+'The glow is not exactly playing fair.','That look has absolutely no business being this good.'
 ];
 $$('.fun').forEach((x,i)=>x.onclick=()=>{toast(messages[i%messages.length]);x.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:280})});
 
@@ -61,7 +61,7 @@ el.addEventListener('pointerleave',()=>{el.classList.remove('tilt-active');el.st
 $$('.magnetic').forEach(el=>{el.addEventListener('pointermove',e=>{if(innerWidth<800)return;const r=el.getBoundingClientRect();el.style.transform='translate('+(e.clientX-(r.left+r.width/2))*.08+'px,'+(e.clientY-(r.top+r.height/2))*.08+'px)'});el.addEventListener('pointerleave',()=>el.style.transform='')});
 
 async function sharePage(){
- const data={title:'Pia — The Moment',text:'A tiny corner of the internet dedicated to Pia.',url:location.href};
+ const data={title:'Pia — Her Space',text:"Pia's personal visual space — her photos, moments, style and story.",url:location.href};
  try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);toast('Page link copied ✦')}}catch(e){}
 }
 $('#shareBtn').onclick=sharePage;
