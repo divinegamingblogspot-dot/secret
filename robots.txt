@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://divinegamingblogspot-dot.github.io/secret/sitemap.xml
