@@ -75,5 +75,5 @@ document.addEventListener('keydown',e=>{
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(()=>{}));}
 
-const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The garden is blooming ✦':'Bloom mode off')};
+const fs=document.querySelector('#flowerScene'),bb=document.querySelector('#bloomBtn');if(fs){let drag=0,sx=0,sy=0,rx=-8,ry=-12;const paint=()=>fs.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';paint();fs.onpointerdown=e=>{drag=1;sx=e.clientX;sy=e.clientY;fs.classList.add('touched')};fs.onpointermove=e=>{if(!drag)return;ry=Math.max(-55,Math.min(55,ry+(e.clientX-sx)*.22));rx=Math.max(-32,Math.min(32,rx-(e.clientY-sy)*.18));sx=e.clientX;sy=e.clientY;paint()};fs.onpointerup=()=>drag=0;fs.onpointercancel=()=>drag=0;fs.onwheel=e=>{e.preventDefault();ry=Math.max(-55,Math.min(55,ry+e.deltaY*.08));paint()}}if(fs&&bb)bb.onclick=()=>{fs.classList.toggle('bloomed');toast(fs.classList.contains('bloomed')?'The garden is blooming ✦':'Bloom mode off')};
 const ps=document.querySelector('#privateSetup');if(ps)ps.onclick=()=>toast('Private gallery needs a storage backend + two-person login to sync safely.');
