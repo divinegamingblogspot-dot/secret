@@ -72,3 +72,5 @@ document.addEventListener('keydown',e=>{
  if(e.key.toLowerCase()==='t'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName))setTheme(themeIndex+1);
  if(e.key==='Home'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName))scrollTo({top:0,behavior:'smooth'});
 });
+
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
