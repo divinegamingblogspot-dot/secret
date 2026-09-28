@@ -10,8 +10,8 @@ glam:["GLAM SIDE","Let the room notice.","Elegant, magnetic and completely comfo
 mystery:["MYSTERY SIDE","Leave a little unsaid.","Some energy is better felt than explained."],
 playful:["PLAYFUL SIDE","Pretty with a plot twist.","The laugh, the chaos, the tiny mischief — all part of the magic."]
 };
-const stage=$("#experienceStage"),label=$("#moodLabel"),title=$("#moodTitle"),copy=$("#moodText");
-function setMood(name){const m=moods[name]||moods.soft;stage.dataset.mood=name;label.textContent=m[0];title.textContent=m[1];copy.textContent=m[2];$(".mood").forEach(b=>b.classList.toggle("active",b.dataset.mood===name))}
+const experienceStage=$("#experienceStage"),label=$("#moodLabel"),title=$("#moodTitle"),copy=$("#moodText");
+function setMood(name){const m=moods[name]||moods.soft;experienceStage.dataset.mood=name;label.textContent=m[0];title.textContent=m[1];copy.textContent=m[2];$(".mood").forEach(b=>b.classList.toggle("active",b.dataset.mood===name))}
 $(".mood").forEach(b=>b.onclick=()=>setMood(b.dataset.mood));
 $("#moodSurprise").onclick=()=>{const keys=Object.keys(moods);setMood(keys[Math.floor(Math.random()*keys.length)]);toast("A different side of Pia ✦")};
 $(".memory-card").forEach((b,i)=>b.onclick=()=>toast(["A moment worth keeping ✦","That laugh deserves its own frame ♡","The little things are often the biggest things.","Leave room for the next beautiful memory ✦"][i]));
