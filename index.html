@@ -172,9 +172,17 @@
  const r=await fetch("media-manifest.jsonl?ts="+Date.now(),{cache:"no-store"}); if(!r.ok)return;
  const lines=(await r.text()).split("\n").filter(Boolean);
  const items=lines.map(x=>{try{return JSON.parse(x)}catch(e){return null}}).filter(Boolean);
- const slots=[...document.querySelectorAll(".gallery .photo")];
- const map={"favourite-frame":0,"that-outfit":1,"latest-mood":2,"that-face":3,"too-gorgeous":4,"her-day":5,"the-detail":6,"the-laugh":7,"memory":8,"just-pia":9};
- items.forEach(m=>{const el=slots[map[m.slot]];if(!el||!m.url)return;el.style.backgroundImage="linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.72)),url('"+m.url.replace(/'/g,"%27")+"')";el.style.backgroundSize="cover";el.style.backgroundPosition="center";el.classList.add("has-pia-media");const small=el.querySelector("small");if(small)small.textContent="Synced to this Secrets block";});
+ const slots=[...document.querySelectorAll(".gallery .photo[data-slot]")];
+ const bySlot=new Map(slots.map(el=>[el.dataset.slot,el]));
+ items.forEach(m=>{
+   const el=bySlot.get(m.slot); if(!el||!m.url)return;
+   const safeUrl=String(m.url).replace(/"/g,"%22").replace(/'/g,"%27");
+   el.style.backgroundImage="linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.72)),url('"+safeUrl+"')";
+   el.style.backgroundSize="cover";
+   el.style.backgroundPosition="center";
+   el.classList.add("has-pia-media");
+   const small=el.querySelector("small"); if(small)small.textContent="Synced to this Secrets block";
+ });
 }catch(e){console.debug("Secrets media bridge",e)}})();
 </script>
 <script src="script.js?v=100"></script>
