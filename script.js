@@ -38,3 +38,7 @@ $("#top")?.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));doc
 
 /* Pia intro interaction — isolated */
 (()=>{const b=document.querySelector("#introLove");if(!b)return;const notes=["If I could bottle one feeling, it would be the way you make an ordinary day feel special.","You do not have to try so hard to be unforgettable. Somehow, you already are.","A little reminder: your smile, your softness and your spark are all worth being adored.","For Pia: may you always see yourself with the same warmth that the people who love you see in you."];let i=0;b.addEventListener("click",()=>{i=(i+1)%notes.length;modal(notes[i]);toast("For Pia, with love ♡")})})();
+
+/* Cinematic intro + reliable moonlight controls */
+(()=>{const intro=document.querySelector("#cinematicIntro"),enter=document.querySelector("#cinematicEnter");if(intro){const close=()=>{intro.classList.add("hide");setTimeout(()=>intro.remove(),1300)};enter?.addEventListener("click",e=>{e.stopPropagation();close()});intro.addEventListener("click",e=>{if(e.target===intro)close()});setTimeout(close,6500)}})();
+(()=>{const b=document.querySelector("#moonlight");if(!b)return;const sync=()=>{const on=document.body.classList.contains("moonlight-mode");b.textContent=on?"Turn off moonlight ☾":"Turn on moonlight ☾";b.setAttribute("aria-pressed",String(on))};b.addEventListener("click",()=>{document.body.classList.toggle("moonlight-mode");sync();toast(document.body.classList.contains("moonlight-mode")?"Moonlight is glowing ✦":"Moonlight off");});sync()})();
