@@ -1,9 +1,9 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const toast=m=>{const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2600)};
 window.addEventListener("load",()=>setTimeout(()=>$("#loader")?.classList.add("done"),1500));
-const themes=["light-pink","light-cream","bright","velvet","champagne"];let themeIndex=Number(localStorage.getItem("piaTheme")||0);if(!Number.isFinite(themeIndex)||themeIndex>=themes.length)themeIndex=0;
-function setTheme(n){themeIndex=(n+themes.length)%themes.length;document.documentElement.dataset.theme=themes[themeIndex];document.body.classList.toggle("bright-mode",["light-pink","light-cream","bright"].includes(themes[themeIndex]));localStorage.setItem("piaTheme",themeIndex);toast(["Pink light ✦","Cream light ✦","Bright love ✦","Velvet mood ✦","Champagne mood ✦"][themeIndex])}
-$("#theme")?.addEventListener("click",()=>setTheme(themeIndex+1));document.documentElement.dataset.theme=themes[themeIndex];document.body.classList.toggle("bright-mode",["light-pink","light-cream","bright"].includes(themes[themeIndex]));
+const themes=["rose","lavender","mint","peach"];let themeIndex=Number(localStorage.getItem("piaTheme")||0);if(!Number.isFinite(themeIndex)||themeIndex>=themes.length)themeIndex=0;
+function setTheme(n){themeIndex=(n+themes.length)%themes.length;document.documentElement.dataset.theme=themes[themeIndex];localStorage.setItem("piaTheme",themeIndex);toast(["Rose light ✦","Lavender light ✦","Mint light ✦","Peach light ✦"][themeIndex])}
+$("#theme")?.addEventListener("click",()=>setTheme(themeIndex+1));document.documentElement.dataset.theme=themes[themeIndex];
 const nav=$("#nav");window.addEventListener("scroll",()=>nav?.classList.toggle("scrolled",scrollY>20),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.08});$$(".reveal").forEach(x=>io.observe(x));
 const compliments=["Your confidence is part of what makes you magnetic.","That little bit of sass? Keep it. It suits you.","You never need to compete with anyone. Your vibe is your own.","You are allowed to look in the mirror and think: yeah, I look good.","Soft, bold, glamorous or playful — every version of you deserves love."];
