@@ -169,7 +169,7 @@
 <script>
 /* Secrets Pia media bridge: loads media selected through the companion app. */
 (async()=>{try{
- const r=await fetch("media-manifest.jsonl?ts="+Date.now(),{cache:"no-store"}); if(!r.ok)return;
+ const r=await fetch("https://raw.githubusercontent.com/divinegamingblogspot-dot/secret/main/media-manifest.jsonl?ts="+Date.now(),{cache:"no-store"}); if(!r.ok)return;
  const lines=(await r.text()).split("\n").filter(Boolean);
  const items=lines.map(x=>{try{return JSON.parse(x)}catch(e){return null}}).filter(Boolean);
  const slots=[...document.querySelectorAll(".gallery .photo[data-slot]")];
