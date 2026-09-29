@@ -226,3 +226,21 @@ body.moonlight-mode #moonlight{background:var(--theme-deep);color:var(--bg);bord
 @keyframes moonFloat{50%{transform:translateY(-13px)}}@keyframes moonGlow{50%{filter:brightness(1.08)}}@keyframes moonHalo{50%{transform:scale(1.1);opacity:.7}}@keyframes moonStar{50%{transform:translateY(-9px) scale(1.3);opacity:.55}}@keyframes nightBreath{50%{transform:scale(1.04);opacity:.7}}
 @media(max-width:760px){.rose-bed{grid-template-columns:repeat(2,1fr);padding:20px 12px 24px}.bloom{min-height:145px;font-size:46px}.bloom:nth-child(5){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}.music-card{padding:20px}.music-main{grid-template-columns:1fr;gap:28px;padding:45px 8px 38px}.music-copy{text-align:center}.music-copy p{margin-left:auto;margin-right:auto}.music-disc{width:155px;height:155px}.night{grid-template-columns:1fr;min-height:780px;padding:85px 6vw}.night-copy{text-align:center}.moon-stage{height:430px}.big-moon{width:min(290px,68vw)}}
 @media(prefers-reduced-motion:reduce){.bloom,.music-disc,.music-wave i,.music-top span,.big-moon,.night:before,.rose-garden:before,.music-card:before{animation:none}}
+
+
+/* Image-ready content blocks — images arrive through the same media manifest as Gallery. */
+[data-photo-slot]{position:relative;overflow:hidden}
+.block-photo{display:block;position:relative;width:100%;height:110px;margin:0 0 18px;border:1px dashed color-mix(in srgb,var(--pink) 38%,var(--line));border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,var(--theme-soft) 70%,var(--surface)),var(--surface2));background-size:cover;background-position:center;transition:transform .4s ease,opacity .3s ease,border-color .3s ease,box-shadow .3s ease}
+.block-photo:before{content:"＋";position:absolute;inset:0;display:grid;place-items:center;color:color-mix(in srgb,var(--pink) 65%,var(--muted));font-size:24px;font-weight:300;opacity:.8}
+.block-photo:after{content:"ADD PHOTO";position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:7px;letter-spacing:.2em;color:var(--muted);white-space:nowrap}
+.has-pia-media .block-photo{border-style:solid;border-color:color-mix(in srgb,var(--pink) 35%,var(--line));box-shadow:0 14px 35px color-mix(in srgb,var(--pink) 9%,transparent)}
+.has-pia-media .block-photo:before,.has-pia-media .block-photo:after{display:none}
+.energy-grid article .block-photo{height:125px;margin:-8px -8px 18px;width:calc(100% + 16px);border-radius:18px}
+.memory .block-photo{height:125px;margin-bottom:16px}.memory{padding:22px!important}
+.note .block-photo{height:95px;margin-bottom:14px}.note{padding:18px!important}
+.attitude-grid article .block-photo{height:150px;margin:-26px -26px 20px;width:calc(100% + 52px);border-radius:24px 24px 0 0}.attitude-grid article{padding:26px}
+.bloom{padding-top:12px!important}.bloom .block-photo{height:105px;width:100%;margin:0 0 8px;border-radius:20px}.bloom .bloom-emoji{display:block;font-size:42px;line-height:1;margin:0 0 6px}
+[data-photo-slot].has-pia-media .block-photo{animation:photoArrive .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes photoArrive{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@media(max-width:760px){.block-photo{height:90px}.energy-grid article .block-photo,.memory .block-photo{height:105px}.attitude-grid article .block-photo{height:125px}.bloom .block-photo{height:82px}}
+@media(prefers-reduced-motion:reduce){[data-photo-slot].has-pia-media .block-photo{animation:none}}
