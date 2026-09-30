@@ -46,11 +46,11 @@ public final class SupabaseApi {
         if(code<200||code>=300)throw new IOException("Storage HTTP "+code+": "+body);
     }
 
-    public static void insertMedia(String token,String ownerId,String storagePath,String title)throws Exception{
+    public static void insertMedia(String token,String ownerId,String storagePath,String title,String slotKey)throws Exception{
         JSONObject row=new JSONObject();
         row.put("owner_id",ownerId);
         row.put("storage_path",storagePath);
-        row.put("slot_key","");
+        row.put("slot_key",slotKey==null?"":slotKey);
         row.put("title",title);
         row.put("media_type","image");
         row.put("is_published",false);
