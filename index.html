@@ -15,7 +15,7 @@
 <div class="loader" id="loader"><div class="loader-mark">P</div><div class="loader-title">MADE FOR PIA</div><div class="loader-bar"><i></i></div><small>her little universe</small></div>
 
 <header class="nav" id="nav">
-<a class="brand" href="#home"><span>P</span><b>Pia</b><i>✦</i></a>
+<a class="brand" href="admin.html" aria-label="Pia private admin"><span>P</span><b>Pia</b><i>✦</i></a>
 <nav>
 <a href="#energy">Energy</a><a href="#experience">Her</a><a href="#memories">Memories</a><a href="#gallery">Gallery</a><a href="#notes">Notes</a><a href="#night">Night</a><a href="#dimensionCore">4D Love</a>
 </nav>
@@ -166,26 +166,28 @@
 <footer><b>Pia ✦</b><span>her style · her moments · her energy · her universe</span><button id="top">↑ top</button></footer>
 <div class="toast" id="toast"></div>
 <div class="modal" id="modal"><div class="modal-card"><button id="close">×</button><span>✦</span><p id="modalText"></p></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* Secrets Pia media bridge: Gallery + image-ready content blocks. */
+/* Public Pia media bridge: published Supabase media only. GitHub manifest is no longer used. */
 (async()=>{try{
- const r=await fetch("media-manifest.jsonl?ts="+Date.now(),{cache:"no-store"}); if(!r.ok)return;
- const lines=(await r.text()).split("\n").filter(Boolean);
- const items=lines.map(x=>{try{return JSON.parse(x)}catch(e){return null}}).filter(Boolean);
- const targets=[...document.querySelectorAll("[data-slot], [data-photo-slot]")];
+ const supabaseUrl="https://qcudkyyrhmnpuazlodyx.supabase.co";
+ const supabaseKey="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
+ const supa=window.supabase.createClient(supabaseUrl,supabaseKey);
+ const {data,error}=await supa.from("media").select("slot_key,storage_path,title").eq("is_published",true).order("sort_order",{ascending:true});
+ if(error)return;
+ const targets=[...document.querySelectorAll("[data-slot],[data-photo-slot]")];
  const bySlot=new Map(targets.map(el=>[(el.dataset.slot||el.dataset.photoSlot),el]));
- items.forEach(m=>{
-   const el=bySlot.get(m.slot); if(!el||!m.url)return;
-   const safeUrl=String(m.url).replace(/"/g,"%22").replace(/'/g,"%27");
+ (data||[]).forEach(m=>{
+   const el=bySlot.get(m.slot_key); if(!el||!m.storage_path)return;
+   const url=supa.storage.from("pia-media").getPublicUrl(m.storage_path).data.publicUrl;
    const target=el.dataset.photoSlot?el.querySelector(".block-photo"):el;
    if(!target)return;
-   target.style.backgroundImage="linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.58)),url('"+safeUrl+"')";
-   target.style.backgroundSize="cover";
-   target.style.backgroundPosition="center";
+   target.style.backgroundImage="linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.58)),url('"+String(url).replace(/"/g,"%22").replace(/'/g,"%27")+"')";
+   target.style.backgroundSize="cover"; target.style.backgroundPosition="center";
    el.classList.add("has-pia-media");
-   const small=el.querySelector("small"); if(small&&el.dataset.slot)small.textContent="Synced to this Secrets block";
+   const small=el.querySelector("small"); if(small&&el.dataset.slot)small.textContent=m.title||"Pia photo";
  });
-}catch(e){console.debug("Secrets Pia media bridge",e)}})();
+}catch(e){console.debug("Pia Supabase media bridge",e)}})();
 </script>
 <script src="script.js?v=100"></script>
 </body>
