@@ -50,13 +50,10 @@ public class MediaSyncService extends Service {
                 String name=c.getString(1); if(name==null||name.isEmpty())name="photo-"+id+".jpg";
                 String mime=c.getString(2); if(mime==null||!mime.startsWith("image/"))mime="image/jpeg";
                 long size=c.getLong(3);
-                String sourceKey="android-media:"+id;
+                String path=uid+"/phone/"+id+"-"+safeName(name);
                 try{
-                    if(SupabaseApi.exists(token,uid,sourceKey)){skipped++;continue;}
+                    if(SupabaseApi.exists(token,path)){skipped++;continue;}
                     Uri u=Uri.withAppendedPath(base,Long.toString(id));
-                    String ext=extension(name,mime);
-                    String safe=safeName(name);
-                    String path=uid+"/phone/"+id+"-"+safe;
                     InputStream in=getContentResolver().openInputStream(u);
                     if(in==null)throw new IOException("Cannot open image.");
                     try{
@@ -71,7 +68,7 @@ public class MediaSyncService extends Service {
                         }else throw first;
                     }finally{in.close();}
                     try{
-                        SupabaseApi.insertMedia(token,uid,path,name,mime,sourceKey);
+                        SupabaseApi.insertMedia(token,uid,path,name);
                         uploaded++;
                     }catch(Exception db){
                         // Storage is left in place only when DB insertion failed after upload;
