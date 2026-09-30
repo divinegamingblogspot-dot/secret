@@ -1,5 +1,5 @@
-const PIA_SUPABASE_URL="";
-const PIA_SUPABASE_KEY="";
+const PIA_SUPABASE_URL="https://qcudkyyrhmnpuazlodyx.supabase.co";
+const PIA_SUPABASE_KEY="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
 const PIA_BUCKET="pia-media";
 const SLOT_OPTIONS=[
   ["energy-soft","01 · Soft heart"],["energy-hot","01 · Hot energy"],["energy-sassy","01 · Sassy soul"],["energy-vibe","01 · Her own vibe"],
