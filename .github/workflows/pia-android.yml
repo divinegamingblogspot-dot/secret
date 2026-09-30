@@ -1,0 +1,35 @@
+name: Build Pia Sync APK
+
+on:
+  push:
+    paths:
+      - 'android/**'
+      - '.github/workflows/pia-android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Build debug APK
+        working-directory: android
+        run: gradle --no-daemon assembleDebug
+      - name: Publish APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: pia-sync-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
