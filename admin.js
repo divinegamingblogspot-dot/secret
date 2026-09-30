@@ -36,7 +36,7 @@ $("#loginForm").addEventListener("submit",async e=>{
 const grid=$("#mediaGrid");
 function slotOptions(selected=""){return '<option value="">Choose website block…</option>'+SLOT_OPTIONS.map(x=>'<option value="'+x[0]+'" '+(x[0]===selected?"selected":"")+'>'+x[1]+"</option>").join("")}
 async function loadMedia(){
- if(!supa)return;
+ if(!supa){toast("Supabase client is not loaded");return}
  const {data,error}=await supa.from("media").select("id,slot_key,title,storage_path,is_featured,is_published,created_at").order("created_at",{ascending:false});
  if(error){toast(supaError(error,"Media library error"));return}
  grid.innerHTML="";
@@ -53,6 +53,7 @@ async function loadMedia(){
  $("#mediaCount").textContent=data?.length||0;$("#publishedCount").textContent=(data||[]).filter(x=>x.is_published).length;$("#featuredCount").textContent=(data||[]).filter(x=>x.is_featured).length;
 }
 async function uploadFiles(list){
+ toast("Upload started — checking connection…");
  if(!supa)return;
  const slot=$("#uploadSlot")?.value||"";
  if(!slot){toast("Choose a website block first");return}
