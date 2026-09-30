@@ -11,7 +11,8 @@ const SLOT_OPTIONS=[
 ];
 const $=s=>document.querySelector(s);
 const toastEl=$("#toast");
-function toast(m){if(!toastEl)return;toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>toastEl.classList.remove("show"),2400)}
+function toast(m){if(!toastEl)return;toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>toastEl.classList.remove("show"),7000)}
+function supaError(error,label){if(!error)return "";console.error(label,error);return [label,error.message,error.code,error.details,error.hint].filter(Boolean).join(" · ")}
 const configured=Boolean(PIA_SUPABASE_URL&&PIA_SUPABASE_KEY&&window.supabase);
 const supa=configured?window.supabase.createClient(PIA_SUPABASE_URL,PIA_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
 const gate=$("#loginGate"),app=$("#adminApp"),status=$("#loginStatus");
@@ -37,14 +38,14 @@ function slotOptions(selected=""){return '<option value="">Choose website block�
 async function loadMedia(){
  if(!supa)return;
  const {data,error}=await supa.from("media").select("id,slot_key,title,storage_path,is_featured,is_published,created_at").order("created_at",{ascending:false});
- if(error){toast(error.message);return}
+ if(error){toast(supaError(error,"Media library error"));return}
  grid.innerHTML="";
  (data||[]).forEach(item=>{
   const url=supa.storage.from(PIA_BUCKET).getPublicUrl(item.storage_path).data.publicUrl;
   const card=document.createElement("article");card.className="media-card";
   card.innerHTML='<img alt=""><div class="media-meta"><strong></strong><span></span><div class="media-actions"><select class="slot-select">'+slotOptions(item.slot_key||"")+'</select><button class="publish">'+(item.is_published?"Published":"Publish")+'</button><button class="remove">Remove</button></div></div>';
   card.querySelector("img").src=url;card.querySelector("img").alt=item.title||"Pia photo";card.querySelector("strong").textContent=item.title||"Pia photo";card.querySelector("span").textContent=item.is_published?"Live on website":"Draft";
-  card.querySelector(".slot-select").onchange=async ev=>{const {error}=await supa.from("media").update({slot_key:ev.target.value,updated_at:new Date().toISOString()}).eq("id",item.id);if(error)toast(error.message);else toast("Website block updated ✦")};
+  card.querySelector(".slot-select").onchange=async ev=>{const {error}=await supa.from("media").update({slot_key:ev.target.value,updated_at:new Date().toISOString()}).eq("id",item.id);if(error)toast(supaError(error,"Block update error"));else toast("Website block updated ✦")};
   card.querySelector(".publish").onclick=async()=>{const next=!item.is_published;const {error}=await supa.from("media").update({is_published:next,updated_at:new Date().toISOString()}).eq("id",item.id);if(error)toast(error.message);else{toast(next?"Published to Pia's website ✦":"Unpublished");loadMedia()}};
   card.querySelector(".remove").onclick=async()=>{if(!confirm("Remove this image from Pia's website?"))return;const {error}=await supa.from("media").delete().eq("id",item.id);if(error)toast(error.message);else{await supa.storage.from(PIA_BUCKET).remove([item.storage_path]);toast("Image removed");loadMedia()}};
   grid.appendChild(card);
@@ -61,9 +62,9 @@ async function uploadFiles(list){
   const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
   const path=user.id+"/"+slot+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"."+ext;
   const up=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,cacheControl:"31536000",upsert:false});
-  if(up.error){toast(up.error.message);continue}
+  if(up.error){toast(supaError(up.error,"Storage upload error"));continue}
   const ins=await supa.from("media").insert({owner_id:user.id,storage_path:path,slot_key:slot,title:file.name,is_published:true,is_featured:false});
-  if(ins.error){await supa.storage.from(PIA_BUCKET).remove([path]);toast(ins.error.message);continue}
+  if(ins.error){await supa.storage.from(PIA_BUCKET).remove([path]);toast(supaError(ins.error,"Database insert error"));continue}
   toast(file.name+" is live on Pia's website ✦");
  }
  loadMedia();
@@ -81,7 +82,7 @@ $("#saveProfile").onclick=async()=>{
  const {data:{user}}=await supa.auth.getUser();if(!user)return;
  const payload={id:user.id,display_name:$("#displayName").value,instagram_url:$("#instagram").value,bio:$("#bio").value,hero_line:$("#heroLine").value,updated_at:new Date().toISOString()};
  const {error}=await supa.from("profiles").upsert(payload);
- toast(error?error.message:"Profile saved ✦");
+ toast(error?supaError(error,"Profile save error"):"Profile saved ✦");
 };
 const signout=document.createElement("button");signout.className="secondary";signout.textContent="Sign out";signout.onclick=()=>supa?.auth.signOut();$(".admin-top").appendChild(signout);
 boot();
