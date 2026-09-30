@@ -55,13 +55,14 @@ async function uploadFiles(list){
  if(!supa)return;
  const slot=$("#uploadSlot")?.value||"";
  if(!slot){toast("Choose a website block first");return}
- const {data:{user}}=await supa.auth.getUser();if(!user){showGate();return}
+ const {data:{user},error:userError}=await supa.auth.getUser();if(userError||!user){toast(userError?.message||"Please log in again");showGate();return}
+ const {data:sessionData}=await supa.auth.getSession();if(!sessionData?.session){toast("Session expired — please log in again");showGate();return}
  for(const file of [...list].filter(f=>f.type.startsWith("image/"))){
   const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
   const path=user.id+"/"+slot+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"."+ext;
   const up=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,cacheControl:"31536000",upsert:false});
   if(up.error){toast(up.error.message);continue}
-  const ins=await supa.from("media").insert({owner_id:user.id,storage_path:path,title:file.name,slot_key:slot,is_published:true,is_featured:false});
+  const ins=await supa.from("media").insert({owner_id:user.id,storage_path:path,slot_key:slot,title:file.name,is_published:true,is_featured:false});
   if(ins.error){await supa.storage.from(PIA_BUCKET).remove([path]);toast(ins.error.message);continue}
   toast(file.name+" is live on Pia's website ✦");
  }
