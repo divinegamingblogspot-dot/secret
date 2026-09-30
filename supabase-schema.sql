@@ -14,6 +14,7 @@ create table if not exists public.media (
   id uuid primary key default gen_random_uuid(),
   owner_id uuid not null references auth.users(id) on delete cascade,
   storage_path text not null,
+  slot_key text not null default '',
   title text not null default '',
   caption text default '',
   media_type text not null default 'image' check (media_type in ('image','video')),
@@ -26,6 +27,7 @@ create table if not exists public.media (
 
 create index if not exists media_public_order_idx on public.media (is_published, sort_order, created_at desc);
 create index if not exists media_owner_idx on public.media (owner_id);
+create index if not exists media_slot_idx on public.media (slot_key, is_published);
 
 alter table public.profiles enable row level security;
 alter table public.media enable row level security;
@@ -57,3 +59,22 @@ using (auth.uid() = id) with check (auth.uid() = id);
 -- Storage bucket should be created in the Dashboard as: pia-media
 -- Then add Storage policies restricting insert/update/delete to authenticated users
 -- whose folder prefix matches auth.uid().
+
+
+-- Run once after the table exists if you are upgrading an older schema:
+alter table public.media add column if not exists slot_key text not null default '';
+
+-- Storage: create a public bucket named pia-media in Dashboard > Storage.
+-- Authenticated owners are the only users allowed to write/delete their own folder.
+create policy "authenticated owners can upload Pia media" on storage.objects
+for insert to authenticated
+with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+
+create policy "authenticated owners can update Pia media" on storage.objects
+for update to authenticated
+using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text))
+with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+
+create policy "authenticated owners can delete Pia media" on storage.objects
+for delete to authenticated
+using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
