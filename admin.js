@@ -57,14 +57,14 @@ async function uploadFiles(list){
  if(!supa)return;
  const slot=$("#uploadSlot")?.value||"";
  if(!slot){toast("Choose a website block first");return}
- const {data:{user},error:userError}=await supa.auth.getUser();if(userError||!user){toast(userError?.message||"Please log in again");showGate();return}
+ toast("Checking your login…"); const {data:{user},error:userError}=await supa.auth.getUser(); if(userError||!user){toast(supaError(userError,"Login check failed")||"Please log in again");showGate();return} toast("Login OK — preparing upload…")
  const {data:sessionData}=await supa.auth.getSession();if(!sessionData?.session){toast("Session expired — please log in again");showGate();return}
  for(const file of [...list].filter(f=>f.type.startsWith("image/"))){
   const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
   const path=user.id+"/"+slot+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"."+ext;
-  const up=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,cacheControl:"31536000",upsert:false});
+  toast("Uploading "+file.name+"…"); const up=await Promise.race([supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,cacheControl:"31536000",upsert:false}),new Promise(resolve=>setTimeout(()=>resolve({error:{message:"Storage request timed out after 20 seconds"}}),20000))]);
   if(up.error){toast(supaError(up.error,"Storage upload error"));continue}
-  const ins=await supa.from("media").insert({owner_id:user.id,storage_path:path,slot_key:slot,title:file.name,is_published:true,is_featured:false});
+  toast("Image uploaded — saving it to the media library…"); const ins=await Promise.race([supa.from("media").insert({owner_id:user.id,storage_path:path,slot_key:slot,title:file.name,is_published:true,is_featured:false}),new Promise(resolve=>setTimeout(()=>resolve({error:{message:"Database request timed out after 20 seconds"}}),20000))]);
   if(ins.error){await supa.storage.from(PIA_BUCKET).remove([path]);toast(supaError(ins.error,"Database insert error"));continue}
   toast(file.name+" is live on Pia's website ✦");
  }
