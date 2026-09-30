@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#09070a">
 <title>Pia Studio — Content Manager</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="admin.css?v=2">
+<link rel="stylesheet" href="admin.css?v=3">
 </head>
 <body><div class="login-gate" id="loginGate"><div class="login-card"><a class="login-mark" href="index.html">Pia</a><span class="login-kicker">PRIVATE SPACE</span><h1>Welcome, Pia.</h1><p>Enter your Pia ID and password to manage the photos on your little universe.</p><form id="loginForm"><label>Pia ID / email<input id="loginEmail" type="email" autocomplete="username" required placeholder="pia@example.com"></label><label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Your password"></label><button class="primary" type="submit">Enter admin panel ✦</button><p class="login-status" id="loginStatus"></p></form><a class="login-back" href="index.html">← Back to Pia's website</a></div></div>
 <div class="admin-shell" id="adminApp" hidden>
@@ -15,7 +15,7 @@
 <nav>
 <a class="active" href="#overview">Overview</a><a href="#media">Media</a><a href="#profile">Profile</a><a href="#settings">Settings</a>
 </nav>
-<div class="side-note"><b>Backend-ready</b><span>Connect Supabase later and this dashboard becomes the real uploader.</span></div>
+<div class="side-note"><b>Private storage</b><span>Supabase is connected. Uploads go directly to the private creator dashboard.</span></div>
 <a class="back-link" href="index.html">← View public site</a>
 </aside>
 <main class="admin-main">
@@ -37,13 +37,13 @@
 <section id="settings" class="panel">
 <div class="panel-head"><div><span class="kicker">Settings</span><h2>Publishing & access.</h2></div></div>
 <div class="setting-row"><div><b>Public website</b><span>Visitors can see published media.</span></div><strong class="on">ON</strong></div>
-<div class="setting-row"><div><b>Creator uploads</b><span>Will be protected by Supabase Auth.</span></div><strong>LOCKED</strong></div>
-<div class="setting-row"><div><b>Storage</b><span>Supabase Storage will hold original images and optimized versions.</span></div><strong>READY</strong></div>
+<div class="setting-row"><div><b>Creator uploads</b><span>Protected by Supabase Auth.</span></div><strong>LOCKED</strong></div>
+<div class="setting-row"><div><b>Storage</b><span>Supabase Storage holds the uploaded images.</span></div><strong>READY</strong></div>
 <div class="setup-card"><span>PRIVATE</span><h3>Only Pia can publish.</h3><p>Images are uploaded into protected storage and linked to a website block. Nothing runs in the background and nothing is synced automatically.</p></div>
 </section>
 </main>
 </div>
 <div class="toast" id="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js?v=2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js?v=3"></script>
 </body>
 </html>
