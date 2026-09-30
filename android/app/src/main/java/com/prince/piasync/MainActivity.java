@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
     static final String PREFS = "pia_sync";
     LinearLayout root;
     EditText email, password;
-    Button login, permission, sync;
+    Button login, permission, sync; Spinner block;
     TextView status, progress;
     android.content.SharedPreferences prefs;
 
@@ -70,6 +70,11 @@ public class MainActivity extends Activity {
 
         sync = btn("Sync all photos");
         root.addView(sync, lp());
+        block = new Spinner(this);
+        ArrayAdapter<String> ba = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, blockLabels());
+        ba.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        block.setAdapter(ba);
+        root.addView(block, lp());
         sync.setOnClickListener(v -> startSync());
 
         progress = text("", 13);
@@ -143,6 +148,7 @@ public class MainActivity extends Activity {
     void startSync() {
         if (!hasFullImageAccess()) { requestMedia(); return; }
         if (prefs.getString("access_token","").isEmpty()) { status.setText("Sign in first."); return; }
+        prefs.edit().putString("selected_slot", slotKeys()[block.getSelectedItemPosition()]).apply();
         Intent i = new Intent(this, MediaSyncService.class).setAction(MediaSyncService.ACTION_SYNC);
         if (Build.VERSION.SDK_INT >= 26) startForegroundService(i); else startService(i);
         status.setText("Sync started. You can leave the app open while it works.");
@@ -163,4 +169,7 @@ public class MainActivity extends Activity {
     }
 
     int dp(int n){ return (int)(n*getResources().getDisplayMetrics().density+0.5f); }
+    String[] slotKeys(){ return new String[]{"","energy-soft","energy-hot","energy-sassy","energy-vibe","memory-01","memory-02","memory-03","memory-04","favourite-frame","that-outfit","latest-mood","that-face","the-detail","the-laugh","after-dark","memory","everyday","just-pia","notes-confidence","notes-sassy","notes-own","notes-attitude","notes-worth","notes-all","attitude-main","attitude-dark","attitude-unapologetic","flower-softness","flower-joy","flower-confidence","flower-rest","flower-being-you"}; }
+    String[] blockLabels(){ return new String[]{"No block — library draft","01 · Soft heart","01 · Hot energy","01 · Sassy soul","01 · Her own vibe","03 · Memory 01","03 · Memory 02","03 · Memory 03","03 · Memory 04","04 · Featured","04 · The look","04 · The smile","04 · The day","04 · The detail","04 · The laugh","04 · After dark","04 · Memory","04 · Everyday","04 · Just Pia","05 · Confidence","05 · Sassy girl","05 · Own it","05 · The attitude","05 · Know your worth","05 · All of you","06 · Main character","06 · After dark","06 · Unapologetic","07 · Softness","07 · Joy","07 · Confidence","07 · Rest","07 · Being you"}; }
+
 }
