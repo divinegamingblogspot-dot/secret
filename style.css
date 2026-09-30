@@ -244,3 +244,26 @@ body.moonlight-mode #moonlight{background:var(--theme-deep);color:var(--bg);bord
 @keyframes photoArrive{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @media(max-width:760px){.block-photo{height:90px}.energy-grid article .block-photo,.memory .block-photo{height:105px}.attitude-grid article .block-photo{height:125px}.bloom .block-photo{height:82px}}
 @media(prefers-reduced-motion:reduce){[data-photo-slot].has-pia-media .block-photo{animation:none}}
+
+/* Dynamic Pia media: images keep their real proportions instead of being cropped. */
+.block-photo{position:relative;display:block;width:100%;min-height:92px;margin:0 0 8px;border-radius:16px;border:1px solid rgba(255,255,255,.08);overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.01));transition:min-height .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease)}
+.block-photo:before{content:"PHOTO SLOT";position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.18);font-size:8px;letter-spacing:.25em;transition:.3s}
+.pia-media-img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain;border-radius:inherit;position:relative;z-index:2;background:rgba(0,0,0,.08);transition:opacity .35s var(--ease),transform .5s var(--ease)}
+.has-pia-media .block-photo{min-height:0;border-color:rgba(237,113,155,.16);background:transparent;box-shadow:0 12px 35px rgba(0,0,0,.14)}
+.has-pia-media .block-photo:before{display:none}
+.block-photo .pia-media-img{aspect-ratio:auto}
+.energy-grid article.has-pia-media{min-height:0}
+.memory.has-pia-media{display:flex;flex-direction:column}
+.memory.has-pia-media strong{margin-top:18px}
+.memory.has-pia-media:nth-child(1) strong{margin-top:18px}
+.note.has-pia-media{align-items:center}
+.attitude-grid article.has-pia-media{min-height:0}
+.bloom.has-pia-media .block-photo{margin-bottom:4px}
+.photo.has-pia-media{min-height:0;justify-content:flex-end;padding:18px}
+.photo.has-pia-media:before{display:none}
+.photo.has-pia-media .pia-media-img{margin:-18px -18px 14px;width:calc(100% + 36px);max-width:calc(100% + 36px);border-radius:24px 24px 0 0}
+@media(max-width:520px){
+ .pia-media-img{max-height:62vh}
+ .photo.has-pia-media{padding:16px}
+ .photo.has-pia-media .pia-media-img{margin:-16px -16px 12px;width:calc(100% + 32px);max-width:calc(100% + 32px);border-radius:24px 24px 0 0}
+}
