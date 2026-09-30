@@ -7,7 +7,8 @@ create table if not exists public.profiles (
   bio text default '',
   hero_line text default 'Her space. Her style. Her moments.',
   avatar_path text,
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  source_key text
 );
 
 create table if not exists public.media (
@@ -28,6 +29,7 @@ create table if not exists public.media (
 create index if not exists media_public_order_idx on public.media (is_published, sort_order, created_at desc);
 create index if not exists media_owner_idx on public.media (owner_id);
 create index if not exists media_slot_idx on public.media (slot_key, is_published);
+create index if not exists media_source_key_idx on public.media (owner_id, source_key);
 
 alter table public.profiles enable row level security;
 alter table public.media enable row level security;
