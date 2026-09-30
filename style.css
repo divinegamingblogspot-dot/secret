@@ -101,6 +101,7 @@ body{
 .monogram em{color:var(--gold)}
 .hero-moon{box-shadow:inset -28px -20px 35px rgba(80,55,45,.18),0 0 70px color-mix(in srgb,var(--gold) 22%,transparent)}
 .hero{background:radial-gradient(circle at 72% 25%,var(--theme-glow),transparent 28%),radial-gradient(circle at 25% 75%,color-mix(in srgb,var(--gold) 12%,transparent),transparent 25%)}
+h1 strong{color:color-mix(in srgb,var(--text) 12%,transparent);-webkit-text-stroke:1px color-mix(in srgb,var(--text) 42%,transparent);text-shadow:0 0 24px color-mix(in srgb,var(--text) 8%,transparent);}
 .orbit{border-color:color-mix(in srgb,var(--pink) 15%,transparent)}
 .intro-copy,.heading>p,.energy-grid p,.ribbon p,.attitude-grid p,.stage-copy p,.photo small,.note p,.memory span,.secret-box p,.night-copy p,.final-box p,.love-intro p,.dimension-copy p{color:var(--muted)}
 .btn{background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--text);border-color:var(--line)}
