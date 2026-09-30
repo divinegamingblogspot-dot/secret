@@ -31,7 +31,7 @@
 </section>
 <section id="media" class="panel">
 <div class="panel-head"><div><span class="kicker">Media library</span><h2>Build the gallery.</h2></div><button class="secondary" id="refreshLibrary" type="button">Refresh synced photos ↻</button></div>
-<div class="dropzone"><div class="drop-icon">✦</div><strong>Synced phone photos appear here</strong><span>Open Pia Sync → allow all photos → Sync all photos. Then refresh this library.</span></div>
+<div class="dropzone" id="uploadZone"><div class="drop-icon">✦</div><strong>Upload photos directly from this website</strong><span>Choose or drag multiple images. They stay as drafts until you assign a website block and publish.</span><input id="webImageInput" type="file" accept="image/*" multiple hidden><div class="access-actions"><button class="primary" id="chooseWebImages" type="button">Choose images</button><span id="uploadStatus"></span></div></div>
 <div class="media-grid" id="mediaGrid"></div>
 </section>
 <section id="profile" class="panel">
@@ -49,6 +49,6 @@
 </main>
 </div>
 <div class="toast" id="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="web-app-sync.js?v=1"></script><script src="admin.js?v=10"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="web-app-sync.js?v=1"></script><script src="admin.js?v=11"></script>
 </body>
 </html>
