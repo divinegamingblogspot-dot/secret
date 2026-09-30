@@ -39,6 +39,27 @@ function slotOptions(selected=""){
  return '<option value="">Choose website block…</option>'+SLOT_OPTIONS.map(x=>'<option value="'+x[0]+'" '+(x[0]===selected?"selected":"")+'>'+x[1]+"</option>").join("");
 }
 
+async function uploadWebImages(files){
+ if(!supa||!files?.length)return;
+ const {data:{user},error:userError}=await supa.auth.getUser();
+ if(userError||!user){toast("Please sign in again.");return}
+ const list=Array.from(files).filter(f=>f.type.startsWith("image/"));
+ if(!list.length){toast("Please choose image files.");return}
+ const out=$("#uploadStatus"); out.textContent="Uploading "+list.length+" image"+(list.length===1?"":"s")+"…";
+ let ok=0;
+ for(const file of list){
+  const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  const path=user.id+"/web-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"-"+safe;
+  const {error:upError}=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,upsert:false});
+  if(upError){toast(supaError(upError,"Upload error"));continue}
+  const {error:rowError}=await supa.from("media").insert({owner_id:user.id,storage_path:path,title:file.name.replace(/\.[^.]+$/,""),media_type:"image",slot_key:"",is_featured:false,is_published:false});
+  if(rowError){await supa.storage.from(PIA_BUCKET).remove([path]);toast(supaError(rowError,"Media record error"));continue}
+  ok++;
+ }
+ $("#webImageInput").value="";
+ out.textContent=ok+" image"+(ok===1?"":"s")+" uploaded as draft"+(ok===1?"":"s")+" ✦";
+ if(ok)loadMedia();
+}
 async function loadMedia(){
  if(!supa)return;
  const {data,error}=await supa.from("media").select("id,slot_key,title,storage_path,is_featured,is_published,created_at").order("created_at",{ascending:false});
@@ -76,6 +97,11 @@ async function loadMedia(){
  $("#featuredCount").textContent=(data||[]).filter(x=>x.is_featured).length;
 }
 
+$("#chooseWebImages")?.addEventListener("click",()=>$("#webImageInput")?.click());
+$("#webImageInput")?.addEventListener("change",e=>uploadWebImages(e.target.files));
+$("#uploadZone")?.addEventListener("dragover",e=>{e.preventDefault();$("#uploadZone").classList.add("dragging")});
+$("#uploadZone")?.addEventListener("dragleave",()=>$("#uploadZone").classList.remove("dragging"));
+$("#uploadZone")?.addEventListener("drop",e=>{e.preventDefault();$("#uploadZone").classList.remove("dragging");uploadWebImages(e.dataTransfer.files)});
 ["refreshMedia","refreshLibrary","refreshOverview"].forEach(id=>$("#"+id)?.addEventListener("click",()=>loadMedia()));
 $("#saveProfile").onclick=async()=>{
  if(!supa)return;
