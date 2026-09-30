@@ -74,7 +74,7 @@ const uploadInput=$("#uploadInput");
 const dz=$("#dropzone");
 const slotWrap=document.createElement("div");slotWrap.className="upload-slot-wrap";slotWrap.innerHTML='<label>Put uploaded image into<select id="uploadSlot">'+slotOptions()+'</select></label>';
 dz.parentNode.insertBefore(slotWrap,dz);
-uploadInput.onchange=e=>{uploadFiles(e.target.files);e.target.value=""};
+uploadInput.onchange=e=>{const files=Array.from(e.target.files||[]);if(!files.length){toast("No image selected.");return}uploadFiles(files);e.target.value=""};
 ["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag")}));
 ["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag")}));
 dz.addEventListener("drop",e=>uploadFiles(e.dataTransfer.files));
