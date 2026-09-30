@@ -78,3 +78,9 @@ with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select 
 create policy "authenticated owners can delete Pia media" on storage.objects
 for delete to authenticated
 using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+
+-- Data API table grants: RLS controls rows, these grants allow the API roles to access the tables.
+grant select on public.media to anon, authenticated;
+grant insert, update, delete on public.media to authenticated;
+grant select on public.profiles to anon, authenticated;
+grant insert, update on public.profiles to authenticated;
