@@ -1,1 +1,86 @@
-const toastEl=document.querySelector('#toast');function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>toastEl.classList.remove('show'),2200)}const grid=document.querySelector('#mediaGrid');const files=[];function render(){grid.innerHTML='';files.forEach((item,i)=>{const card=document.createElement('article');card.className='media-card';card.innerHTML='<img alt="'+item.name.replace(/"/g,'')+'" src="'+item.url+'"><div class="media-meta"><strong>'+item.name+'</strong><span>Draft · local preview</span><div class="media-actions"><button class="feature '+(item.featured?'active':'')+'">'+(item.featured?'★ Featured':'☆ Feature')+'</button><button class="remove">Remove</button></div></div>';card.querySelector('.feature').onclick=()=>{files.forEach(x=>x.featured=false);item.featured=!item.featured;render();updateStats()};card.querySelector('.remove').onclick=()=>{URL.revokeObjectURL(item.url);files.splice(i,1);render();updateStats()};grid.appendChild(card)})}function updateStats(){document.querySelector('#mediaCount').textContent=files.length;document.querySelector('#publishedCount').textContent=files.length?'0':'0';document.querySelector('#featuredCount').textContent=files.filter(x=>x.featured).length}function addFiles(list){[...list].filter(f=>f.type.startsWith('image/')).forEach(file=>files.push({name:file.name,url:URL.createObjectURL(file),featured:false}));render();updateStats();if(list.length)toast(files.length+' image'+(files.length===1?'':'s')+' added to preview ✦')}document.querySelector('#uploadInput').onchange=e=>addFiles(e.target.files);const dz=document.querySelector('#dropzone');['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('drag')}));['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('drag')}));dz.addEventListener('drop',e=>addFiles(e.dataTransfer.files));document.querySelector('#saveProfile').onclick=()=>toast('Profile draft saved locally ✦');updateStats();
+const PIA_SUPABASE_URL="";
+const PIA_SUPABASE_KEY="";
+const PIA_BUCKET="pia-media";
+const SLOT_OPTIONS=[
+  ["energy-soft","01 · Soft heart"],["energy-hot","01 · Hot energy"],["energy-sassy","01 · Sassy soul"],["energy-vibe","01 · Her own vibe"],
+  ["memory-01","03 · Memory 01"],["memory-02","03 · Memory 02"],["memory-03","03 · Memory 03"],["memory-04","03 · Memory 04"],
+  ["favourite-frame","04 · Featured"],["that-outfit","04 · The look"],["latest-mood","04 · The smile"],["that-face","04 · The day"],["the-detail","04 · The detail"],["the-laugh","04 · The laugh"],["after-dark","04 · After dark"],["memory","04 · Memory"],["everyday","04 · Everyday"],["just-pia","04 · Just Pia"],
+  ["notes-confidence","05 · Confidence"],["notes-sassy","05 · Sassy girl"],["notes-own","05 · Own it"],["notes-attitude","05 · The attitude"],["notes-worth","05 · Know your worth"],["notes-all","05 · All of you"],
+  ["attitude-main","06 · Main character"],["attitude-dark","06 · After dark"],["attitude-unapologetic","06 · Unapologetic"],
+  ["flower-softness","07 · Softness"],["flower-joy","07 · Joy"],["flower-confidence","07 · Confidence"],["flower-rest","07 · Rest"],["flower-being-you","07 · Being you"]
+];
+const $=s=>document.querySelector(s);
+const toastEl=$("#toast");
+function toast(m){if(!toastEl)return;toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>toastEl.classList.remove("show"),2400)}
+const configured=Boolean(PIA_SUPABASE_URL&&PIA_SUPABASE_KEY&&window.supabase);
+const supa=configured?window.supabase.createClient(PIA_SUPABASE_URL,PIA_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
+const gate=$("#loginGate"),app=$("#adminApp"),status=$("#loginStatus");
+function setupRequired(){status.textContent="Admin backend is not connected yet. Add the Supabase project URL and publishable key in admin.js.";status.className="login-status error"}
+function showApp(){gate.hidden=true;app.hidden=false;loadMedia()}
+function showGate(){gate.hidden=false;app.hidden=true}
+async function boot(){
+ if(!configured){showGate();return setupRequired()}
+ const {data}=await supa.auth.getSession();
+ if(data.session)showApp();else showGate();
+ supa.auth.onAuthStateChange((_event,session)=>session?showApp():showGate());
+}
+$("#loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!configured)return setupRequired();
+ status.textContent="Checking…";status.className="login-status";
+ const {error}=await supa.auth.signInWithPassword({email:$("#loginEmail").value.trim(),password:$("#loginPassword").value});
+ if(error){status.textContent=error.message;status.className="login-status error";return}
+ status.textContent="";
+});
+const grid=$("#mediaGrid");
+function slotOptions(selected=""){return '<option value="">Choose website block…</option>'+SLOT_OPTIONS.map(x=>'<option value="'+x[0]+'" '+(x[0]===selected?"selected":"")+'>'+x[1]+"</option>").join("")}
+async function loadMedia(){
+ if(!supa)return;
+ const {data,error}=await supa.from("media").select("id,slot_key,title,storage_path,is_featured,is_published,created_at").order("created_at",{ascending:false});
+ if(error){toast(error.message);return}
+ grid.innerHTML="";
+ (data||[]).forEach(item=>{
+  const url=supa.storage.from(PIA_BUCKET).getPublicUrl(item.storage_path).data.publicUrl;
+  const card=document.createElement("article");card.className="media-card";
+  card.innerHTML='<img alt=""><div class="media-meta"><strong></strong><span></span><div class="media-actions"><select class="slot-select">'+slotOptions(item.slot_key||"")+'</select><button class="publish">'+(item.is_published?"Published":"Publish")+'</button><button class="remove">Remove</button></div></div>';
+  card.querySelector("img").src=url;card.querySelector("img").alt=item.title||"Pia photo";card.querySelector("strong").textContent=item.title||"Pia photo";card.querySelector("span").textContent=item.is_published?"Live on website":"Draft";
+  card.querySelector(".slot-select").onchange=async ev=>{const {error}=await supa.from("media").update({slot_key:ev.target.value,updated_at:new Date().toISOString()}).eq("id",item.id);if(error)toast(error.message);else toast("Website block updated ✦")};
+  card.querySelector(".publish").onclick=async()=>{const next=!item.is_published;const {error}=await supa.from("media").update({is_published:next,updated_at:new Date().toISOString()}).eq("id",item.id);if(error)toast(error.message);else{toast(next?"Published to Pia's website ✦":"Unpublished");loadMedia()}};
+  card.querySelector(".remove").onclick=async()=>{if(!confirm("Remove this image from Pia's website?"))return;const {error}=await supa.from("media").delete().eq("id",item.id);if(error)toast(error.message);else{await supa.storage.from(PIA_BUCKET).remove([item.storage_path]);toast("Image removed");loadMedia()}};
+  grid.appendChild(card);
+ });
+ $("#mediaCount").textContent=data?.length||0;$("#publishedCount").textContent=(data||[]).filter(x=>x.is_published).length;$("#featuredCount").textContent=(data||[]).filter(x=>x.is_featured).length;
+}
+async function uploadFiles(list){
+ if(!supa)return;
+ const slot=$("#uploadSlot")?.value||"";
+ if(!slot){toast("Choose a website block first");return}
+ const {data:{user}}=await supa.auth.getUser();if(!user){showGate();return}
+ for(const file of [...list].filter(f=>f.type.startsWith("image/"))){
+  const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
+  const path=user.id+"/"+slot+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"."+ext;
+  const up=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,cacheControl:"31536000",upsert:false});
+  if(up.error){toast(up.error.message);continue}
+  const ins=await supa.from("media").insert({owner_id:user.id,storage_path:path,title:file.name,slot_key:slot,is_published:true,is_featured:false});
+  if(ins.error){await supa.storage.from(PIA_BUCKET).remove([path]);toast(ins.error.message);continue}
+  toast(file.name+" is live on Pia's website ✦");
+ }
+ loadMedia();
+}
+const uploadInput=$("#uploadInput");
+const dz=$("#dropzone");
+const slotWrap=document.createElement("div");slotWrap.className="upload-slot-wrap";slotWrap.innerHTML='<label>Put uploaded image into<select id="uploadSlot">'+slotOptions()+'</select></label>';
+dz.parentNode.insertBefore(slotWrap,dz);
+uploadInput.onchange=e=>{uploadFiles(e.target.files);e.target.value=""};
+["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag")}));
+["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag")}));
+dz.addEventListener("drop",e=>uploadFiles(e.dataTransfer.files));
+$("#saveProfile").onclick=async()=>{
+ if(!supa)return;
+ const {data:{user}}=await supa.auth.getUser();if(!user)return;
+ const payload={id:user.id,display_name:$("#displayName").value,instagram_url:$("#instagram").value,bio:$("#bio").value,hero_line:$("#heroLine").value,updated_at:new Date().toISOString()};
+ const {error}=await supa.from("profiles").upsert(payload);
+ toast(error?error.message:"Profile saved ✦");
+};
+const signout=document.createElement("button");signout.className="secondary";signout.textContent="Sign out";signout.onclick=()=>supa?.auth.signOut();$(".admin-top").appendChild(signout);
+boot();
