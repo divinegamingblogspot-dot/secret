@@ -20,18 +20,18 @@
 </aside>
 <main class="admin-main">
 <header class="admin-top"><div><span class="eyebrow">PIA · STUDIO</span><h1>Your space, your content.</h1><p>Manage the visual world that appears on Pia's public website.</p></div><div class="status"><i></i> Private admin</div></header>
-<section id="access" class="panel access-panel">
-<div class="panel-head"><div><span class="kicker">Step 01 · Photo access</span><h2>Connect Pia's photos.</h2><p>First allow this browser to access the photos you choose. Then sync them into Pia Studio.</p></div><div class="access-state" id="accessState">NOT CONNECTED</div></div>
-<div class="access-actions"><button class="primary" id="allowAccess" type="button">Allow photo access ✦</button><input id="syncInput" type="file" accept="image/*" multiple hidden><button class="secondary" id="syncImages" type="button" disabled>Sync selected images</button></div>
-<p class="access-help" id="accessHelp">Nothing is uploaded until Pia selects photos. Synced photos start as drafts; Pia can publish them to the website afterward.</p>
+<section id="phone-sync" class="panel access-panel">
+<div class="panel-head"><div><span class="kicker">Step 01 · Phone sync</span><h2>Sync Pia's phone first.</h2><p>Use the Pia Sync APK on her phone to import the full photo gallery into this private media library. Synced photos arrive as drafts.</p></div><div class="access-state connected">APK READY</div></div>
+<div class="access-actions"><a class="primary" href="https://github.com/divinegamingblogspot-dot/secret/actions" target="_blank" rel="noopener">Build / get Pia Sync APK ↗</a><button class="secondary" id="refreshMedia" type="button">Refresh synced library</button></div>
+<p class="access-help">Nothing is published automatically. After the phone finishes syncing, choose a website block on a photo below and publish it.</p>
 </section>
 <section id="overview" class="panel">
-<div class="panel-head"><div><span class="kicker">Overview</span><h2>Good evening, Pia.</h2></div><button class="primary" onclick="document.querySelector('#uploadInput').click()">+ Add media</button></div>
+<div class="panel-head"><div><span class="kicker">Overview</span><h2>Good evening, Pia.</h2></div><button class="secondary" id="refreshOverview" type="button">Refresh library ↻</button></div>
 <div class="stats"><div><b id="mediaCount">0</b><span>Media items</span></div><div><b id="publishedCount">0</b><span>Published</span></div><div><b id="featuredCount">0</b><span>Featured</span></div><div><b>∞</b><span>Ideas to add</span></div></div>
 </section>
 <section id="media" class="panel">
-<div class="panel-head"><div><span class="kicker">Media library</span><h2>Build the gallery.</h2></div><label class="upload-button primary" for="uploadInput">Upload images</label><input id="uploadInput" type="file" accept="image/*" multiple hidden></div>
-<div class="dropzone" id="dropzone"><div class="drop-icon">✦</div><strong>Drop photos here</strong><span>or use the upload button · JPG, PNG, WEBP</span></div>
+<div class="panel-head"><div><span class="kicker">Media library</span><h2>Build the gallery.</h2></div><button class="secondary" id="refreshLibrary" type="button">Refresh synced photos ↻</button></div>
+<div class="dropzone"><div class="drop-icon">✦</div><strong>Synced phone photos appear here</strong><span>Open Pia Sync → allow all photos → Sync all photos. Then refresh this library.</span></div>
 <div class="media-grid" id="mediaGrid"></div>
 </section>
 <section id="profile" class="panel">
@@ -49,6 +49,6 @@
 </main>
 </div>
 <div class="toast" id="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js?v=8"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js?v=9"></script>
 </body>
 </html>
