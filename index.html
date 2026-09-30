@@ -168,20 +168,20 @@
 <div class="modal" id="modal"><div class="modal-card"><button id="close">×</button><span>✦</span><p id="modalText"></p></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* Public Pia media bridge: preserve each photo's natural aspect ratio. */
+/* Public Pia media bridge: published images drive the real block dimensions. */
 (async()=>{try{
  const supabaseUrl="https://qcudkyyrhmnpuazlodyx.supabase.co";
  const supabaseKey="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
  const supa=window.supabase.createClient(supabaseUrl,supabaseKey);
- const {data,error}=await supa.from("media").select("slot_key,storage_path,title").eq("is_published",true).order("sort_order",{ascending:true});
+ const {data,error}=await supa.from("media").select("slot_key,storage_path,title,caption,media_type").eq("is_published",true).order("sort_order",{ascending:true}).order("created_at",{ascending:false});
  if(error)return;
  const targets=[...document.querySelectorAll("[data-slot],[data-photo-slot]")];
  const bySlot=new Map(targets.map(el=>[(el.dataset.slot||el.dataset.photoSlot),el]));
  (data||[]).forEach(m=>{
    const el=bySlot.get(m.slot_key); if(!el||!m.storage_path)return;
-   const url=supa.storage.from("pia-media").getPublicUrl(m.storage_path).data.publicUrl;
    const host=el.dataset.photoSlot?el.querySelector(".block-photo"):el;
    if(!host)return;
+   const url=supa.storage.from("pia-media").getPublicUrl(m.storage_path).data.publicUrl;
    host.querySelector(".pia-media-img")?.remove();
    const img=document.createElement("img");
    img.className="pia-media-img";
@@ -189,17 +189,24 @@
    img.alt=m.title||"Pia photo";
    img.loading="lazy";
    img.decoding="async";
-   img.addEventListener("load",()=>{
-     el.style.setProperty("--pia-ratio",(img.naturalWidth/img.naturalHeight).toFixed(4));
-     el.classList.add("pia-media-loaded");
-   },{once:true});
+   const applyRatio=()=>{
+     if(!img.naturalWidth||!img.naturalHeight)return;
+     const ratio=img.naturalWidth/img.naturalHeight;
+     el.style.setProperty("--pia-ratio",ratio.toFixed(5));
+     host.style.setProperty("--pia-image-ratio",ratio.toFixed(5));
+     host.style.aspectRatio=ratio;
+     el.classList.add("has-pia-media","pia-media-loaded");
+     window.dispatchEvent(new CustomEvent("pia-media-loaded",{detail:{slot:m.slot_key,ratio,url}}));
+   };
+   img.addEventListener("load",applyRatio,{once:true});
+   img.addEventListener("error",()=>{host.style.aspectRatio="";el.classList.remove("has-pia-media","pia-media-loaded")},{once:true});
    host.prepend(img);
    el.classList.add("has-pia-media");
+   if(img.complete)applyRatio();
    const small=el.querySelector("small");
    if(small&&el.dataset.slot)small.textContent=m.title||"Pia photo";
  });
-}catch(e){console.debug("Pia Supabase media bridge",e)}})();
-</script>
-<script src="script.js?v=101"></script>
+}catch(e){console.debug("Pia Supabase media bridge",e)}})();</script>
+<script src="script.js?v=102"></script>
 </body>
 </html>
