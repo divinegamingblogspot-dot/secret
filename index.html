@@ -168,7 +168,7 @@
 <div class="modal" id="modal"><div class="modal-card"><button id="close">×</button><span>✦</span><p id="modalText"></p></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* Public Pia media bridge: published Supabase media only. GitHub manifest is no longer used. */
+/* Public Pia media bridge: preserve each photo's natural aspect ratio. */
 (async()=>{try{
  const supabaseUrl="https://qcudkyyrhmnpuazlodyx.supabase.co";
  const supabaseKey="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
@@ -180,15 +180,26 @@
  (data||[]).forEach(m=>{
    const el=bySlot.get(m.slot_key); if(!el||!m.storage_path)return;
    const url=supa.storage.from("pia-media").getPublicUrl(m.storage_path).data.publicUrl;
-   const target=el.dataset.photoSlot?el.querySelector(".block-photo"):el;
-   if(!target)return;
-   target.style.backgroundImage="linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.58)),url('"+String(url).replace(/"/g,"%22").replace(/'/g,"%27")+"')";
-   target.style.backgroundSize="cover"; target.style.backgroundPosition="center";
+   const host=el.dataset.photoSlot?el.querySelector(".block-photo"):el;
+   if(!host)return;
+   host.querySelector(".pia-media-img")?.remove();
+   const img=document.createElement("img");
+   img.className="pia-media-img";
+   img.src=url;
+   img.alt=m.title||"Pia photo";
+   img.loading="lazy";
+   img.decoding="async";
+   img.addEventListener("load",()=>{
+     el.style.setProperty("--pia-ratio",(img.naturalWidth/img.naturalHeight).toFixed(4));
+     el.classList.add("pia-media-loaded");
+   },{once:true});
+   host.prepend(img);
    el.classList.add("has-pia-media");
-   const small=el.querySelector("small"); if(small&&el.dataset.slot)small.textContent=m.title||"Pia photo";
+   const small=el.querySelector("small");
+   if(small&&el.dataset.slot)small.textContent=m.title||"Pia photo";
  });
 }catch(e){console.debug("Pia Supabase media bridge",e)}})();
 </script>
-<script src="script.js?v=100"></script>
+<script src="script.js?v=101"></script>
 </body>
 </html>
