@@ -68,7 +68,7 @@ public class MediaSyncService extends Service {
                         }else throw first;
                     }finally{in.close();}
                     try{
-                        SupabaseApi.insertMedia(token,uid,path,name);
+                        SupabaseApi.insertMedia(token,uid,path,name,prefs.getString("selected_slot",""));
                         uploaded++;
                     }catch(Exception db){
                         // Storage is left in place only when DB insertion failed after upload;
