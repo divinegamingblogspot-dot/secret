@@ -68,14 +68,22 @@ async function loadMedia(){
  (data||[]).forEach(item=>{
   const url=supa.storage.from(PIA_BUCKET).getPublicUrl(item.storage_path).data.publicUrl;
   const card=document.createElement("article");card.className="media-card";
-  card.innerHTML='<img alt=""><div class="media-meta"><strong></strong><span></span><div class="media-actions"><select class="slot-select">'+slotOptions(item.slot_key||"")+'</select><button class="publish">'+(item.is_published?"Published":"Publish")+'</button><button class="remove">Remove</button></div></div>';
+  card.innerHTML='<img alt=""><div class="media-meta"><strong></strong><span></span><div class="media-actions"><select class="slot-select">'+slotOptions(item.slot_key||"")+'</select><button class="publish">'+(item.is_published?"Published":"Publish")+'</button><button class="remove-block">Remove from block</button><button class="remove">Delete image</button></div></div>';
   card.querySelector("img").src=url;
   card.querySelector("img").alt=item.title||"Pia photo";
   card.querySelector("strong").textContent=item.title||"Pia photo";
   card.querySelector("span").textContent=item.is_published?"Live on website":"Synced draft · choose a block";
   card.querySelector(".slot-select").onchange=async ev=>{
-   const {error}=await supa.from("media").update({slot_key:ev.target.value,updated_at:new Date().toISOString()}).eq("id",item.id);
+   item.slot_key=ev.target.value;
+   const {error}=await supa.from("media").update({slot_key:item.slot_key,updated_at:new Date().toISOString()}).eq("id",item.id);
    if(error)toast(supaError(error,"Block update error"));else toast("Website block updated ✦");
+  };
+  card.querySelector(".remove-block").onclick=async()=>{
+   if(!item.slot_key&&!item.is_published){toast("This image is already only in the synced library.");return}
+   const {error}=await supa.from("media").update({slot_key:"",is_published:false,updated_at:new Date().toISOString()}).eq("id",item.id);
+   if(error){toast(supaError(error,"Block removal error"));return}
+   item.slot_key="";item.is_published=false;
+   toast("Image removed from the website block — still synced ✦");loadMedia();
   };
   card.querySelector(".publish").onclick=async()=>{
    if(!item.slot_key){toast("Choose a website block before publishing.");return}
