@@ -13,7 +13,7 @@
 <aside class="sidebar">
 <a class="admin-brand" href="index.html"><span>P</span><div><strong>Niharika Studio</strong><small>Love & content dashboard</small></div></a>
 <nav>
-<a class="active" href="#overview">Overview</a><a href="#media">Media</a><a href="#profile">Profile</a><a href="#settings">Settings</a>
+<a class="active" href="#overview">Overview</a><a href="#media">Media</a><a href="#profile">Profile</a><a href="#settings">Settings</a><a href="#security">Security</a>
 </nav>
 <div class="side-note"><b>Private storage</b><span>Supabase is connected. Uploads go directly to the private creator dashboard.</span></div>
 <a class="back-link" href="index.html">← View public site</a>
@@ -36,8 +36,16 @@
 </section>
 <section id="profile" class="panel">
 <div class="panel-head"><div><span class="kicker">Profile</span><h2>How Niharika appears.</h2></div><span class="pill">Connected storage</span></div>
-<div class="form-grid"><label>Display name<input id="displayName" value="Niharika"></label><label>Instagram<input id="instagram" value="@niharikaswami03"></label><label class="wide">Bio<textarea id="bio">Style, moments, moods and little pieces of life — all in one place.</textarea></label><label class="wide">Hero line<input id="heroLine" value="Her space. Her style. Her moments."></label></div>
+<div class="form-grid"><label>Display name<input id="displayName" value="Niharika"></label><label>Instagram<input id="instagram" value="@niharikaaaaaaaaa09"></label><label class="wide">Bio<textarea id="bio">Style, moments, moods and little pieces of life — all in one place.</textarea></label><label class="wide">Hero line<input id="heroLine" value="Her space. Her style. Her moments."></label></div>
 <button class="secondary" id="saveProfile">Save profile</button>
+</section>
+<section id="security" class="panel">
+<div class="panel-head"><div><span class="kicker">Account security</span><h2>Niharika's login.</h2><p>Change the email or password used to enter this private dashboard. Credentials are managed by Supabase Auth; passwords are never stored in this website.</p></div><span class="pill" id="accountEmailLabel">Signed in</span></div>
+<div class="security-grid">
+<div class="security-card"><span class="security-kicker">EMAIL</span><h3>Change login email</h3><p>Your new email may need confirmation depending on the Supabase Auth settings.</p><label>New email<input id="newLoginEmail" type="email" autocomplete="email" placeholder="new@email.com"></label><button class="secondary" id="changeEmail" type="button">Update login email</button></div>
+<div class="security-card"><span class="security-kicker">PASSWORD</span><h3>Change password</h3><p>Use a strong password you do not reuse elsewhere.</p><label>New password<input id="newLoginPassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters"></label><label>Confirm password<input id="confirmLoginPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Repeat the password"></label><button class="secondary" id="changePassword" type="button">Update password</button></div>
+</div>
+<div class="setup-card security-warning"><span>ACCOUNT CHANGE</span><h3>Creating a separate Niharika user</h3><p>A browser-only admin page can safely update the currently signed-in user's email/password, but it must not contain a Supabase secret/service-role key. Creating or deleting arbitrary Auth users requires a trusted server or the Supabase Dashboard. Keep the existing account if you want all existing media/profile ownership to remain intact.</p></div>
 </section>
 <section id="settings" class="panel">
 <div class="panel-head"><div><span class="kicker">Settings</span><h2>Publishing & access.</h2></div></div>
@@ -49,6 +57,6 @@
 </main>
 </div>
 <div class="toast" id="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="web-app-sync.js?v=1"></script><script src="admin.js?v=12"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="web-app-sync.js?v=1"></script><script src="admin.js?v=13"></script>
 </body>
 </html>
