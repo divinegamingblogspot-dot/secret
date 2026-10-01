@@ -35,6 +35,33 @@ $("#loginForm").addEventListener("submit",async e=>{
  status.textContent="";
 });
 
+async function refreshAccountLabel(){
+ if(!supa)return;
+ const {data:{user}}=await supa.auth.getUser();
+ if(!user)return;
+ const el=$("#accountEmailLabel"); if(el)el.textContent=user.email||"Signed in";
+ const email=$("#newLoginEmail"); if(email && !email.value)email.value=user.email||"";
+}
+async function changeLoginEmail(){
+ if(!supa)return;
+ const email=$("#newLoginEmail")?.value.trim();
+ if(!email)return toast("Enter the new login email.");
+ const {error}=await supa.auth.updateUser({email});
+ toast(error?supaError(error,"Email update error"):"Login email update requested ✦");
+ if(!error)refreshAccountLabel();
+}
+async function changeLoginPassword(){
+ if(!supa)return;
+ const password=$("#newLoginPassword")?.value||"";
+ const confirm=$("#confirmLoginPassword")?.value||"";
+ if(password.length<8)return toast("Use a password with at least 8 characters.");
+ if(password!==confirm)return toast("The two passwords do not match.");
+ const {error}=await supa.auth.updateUser({password});
+ if(error){toast(supaError(error,"Password update error"));return}
+ $("#newLoginPassword").value=""; $("#confirmLoginPassword").value="";
+ toast("Password updated ✦");
+}
+
 function slotOptions(selected=""){
  return '<option value="">Choose website block…</option>'+SLOT_OPTIONS.map(x=>'<option value="'+x[0]+'" '+(x[0]===selected?"selected":"")+'>'+x[1]+"</option>").join("");
 }
@@ -111,15 +138,31 @@ $("#uploadZone")?.addEventListener("dragover",e=>{e.preventDefault();$("#uploadZ
 $("#uploadZone")?.addEventListener("dragleave",()=>$("#uploadZone").classList.remove("dragging"));
 $("#uploadZone")?.addEventListener("drop",e=>{e.preventDefault();$("#uploadZone").classList.remove("dragging");uploadWebImages(e.dataTransfer.files)});
 ["refreshMedia","refreshLibrary","refreshOverview"].forEach(id=>$("#"+id)?.addEventListener("click",()=>loadMedia()));
+$("#changeEmail")?.addEventListener("click",changeLoginEmail);
+$("#changePassword")?.addEventListener("click",changeLoginPassword);
+
 $("#saveProfile").onclick=async()=>{
+
  if(!supa)return;
  const {data:{user}}=await supa.auth.getUser();if(!user)return;
  const payload={id:user.id,display_name:$("#displayName").value,instagram_url:$("#instagram").value,bio:$("#bio").value,hero_line:$("#heroLine").value,updated_at:new Date().toISOString()};
  const {error}=await supa.from("profiles").upsert(payload);
  toast(error?supaError(error,"Profile save error"):"Profile saved ✦");
 };
+
+async function saveInitialAccountProfile(){
+ if(!supa)return;
+ const {data:{user}}=await supa.auth.getUser();
+ if(!user)return;
+ const email=$("#instagram");
+ if(email && (!email.value || email.value==="@niharikaswami03")) email.value="@niharikaaaaaaaaa09";
+ refreshAccountLabel();
+}
+
+};
 const signout=document.createElement("button");
 signout.className="secondary";signout.textContent="Sign out";
 signout.onclick=()=>supa?.auth.signOut();
 $(".admin-top").appendChild(signout);
 boot();
+supa?.auth.getSession().then(()=>saveInitialAccountProfile());
