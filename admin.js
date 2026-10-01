@@ -1,10 +1,10 @@
-const PIA_SUPABASE_URL="https://qcudkyyrhmnpuazlodyx.supabase.co";
-const PIA_SUPABASE_KEY="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
-const PIA_BUCKET="pia-media";
+const NIHARIKA_SUPABASE_URL="https://qcudkyyrhmnpuazlodyx.supabase.co";
+const NIHARIKA_SUPABASE_KEY="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
+const NIHARIKA_BUCKET="niharika-media";
 const SLOT_OPTIONS=[
 ["energy-soft","01 · Soft heart"],["energy-hot","01 · Hot energy"],["energy-sassy","01 · Sassy soul"],["energy-vibe","01 · Her own vibe"],
 ["memory-01","03 · Memory 01"],["memory-02","03 · Memory 02"],["memory-03","03 · Memory 03"],["memory-04","03 · Memory 04"],
-["favourite-frame","04 · Featured"],["that-outfit","04 · The look"],["latest-mood","04 · The smile"],["that-face","04 · The day"],["the-detail","04 · The detail"],["the-laugh","04 · The laugh"],["after-dark","04 · After dark"],["memory","04 · Memory"],["everyday","04 · Everyday"],["just-pia","04 · Just Pia"],
+["favourite-frame","04 · Featured"],["that-outfit","04 · The look"],["latest-mood","04 · The smile"],["that-face","04 · The day"],["the-detail","04 · The detail"],["the-laugh","04 · The laugh"],["after-dark","04 · After dark"],["memory","04 · Memory"],["everyday","04 · Everyday"],["just-niharika","04 · Just Niharika"],
 ["notes-confidence","05 · Confidence"],["notes-sassy","05 · Sassy girl"],["notes-own","05 · Own it"],["notes-attitude","05 · The attitude"],["notes-worth","05 · Know your worth"],["notes-all","05 · All of you"],
 ["attitude-main","06 · Main character"],["attitude-dark","06 · After dark"],["attitude-unapologetic","06 · Unapologetic"],
 ["flower-softness","07 · Softness"],["flower-joy","07 · Joy"],["flower-confidence","07 · Confidence"],["flower-rest","07 · Rest"],["flower-being-you","07 · Being you"]
@@ -12,8 +12,8 @@ const SLOT_OPTIONS=[
 const $=s=>document.querySelector(s), toastEl=$("#toast");
 function toast(m){if(!toastEl)return;toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(window.__t);window.__t=setTimeout(()=>toastEl.classList.remove("show"),6000)}
 function supaError(e,label){if(!e)return "";console.error(label,e);return [label,e.message,e.code,e.details,e.hint].filter(Boolean).join(" · ")}
-const configured=Boolean(PIA_SUPABASE_URL&&PIA_SUPABASE_KEY&&window.supabase);
-const supa=configured?window.supabase.createClient(PIA_SUPABASE_URL,PIA_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
+const configured=Boolean(NIHARIKA_SUPABASE_URL&&NIHARIKA_SUPABASE_KEY&&window.supabase);
+const supa=configured?window.supabase.createClient(NIHARIKA_SUPABASE_URL,NIHARIKA_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
 const gate=$("#loginGate"),app=$("#adminApp"),status=$("#loginStatus"),grid=$("#mediaGrid");
 
 function showApp(){gate.hidden=true;app.hidden=false;loadMedia()}
@@ -50,10 +50,10 @@ async function uploadWebImages(files){
  for(const file of list){
   const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
   const path=user.id+"/web-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"-"+safe;
-  const {error:upError}=await supa.storage.from(PIA_BUCKET).upload(path,file,{contentType:file.type,upsert:false});
+  const {error:upError}=await supa.storage.from(NIHARIKA_BUCKET).upload(path,file,{contentType:file.type,upsert:false});
   if(upError){toast(supaError(upError,"Upload error"));continue}
   const {error:rowError}=await supa.from("media").insert({owner_id:user.id,storage_path:path,title:file.name.replace(/\.[^.]+$/,""),media_type:"image",slot_key:"",is_featured:false,is_published:false});
-  if(rowError){await supa.storage.from(PIA_BUCKET).remove([path]);toast(supaError(rowError,"Media record error"));continue}
+  if(rowError){await supa.storage.from(NIHARIKA_BUCKET).remove([path]);toast(supaError(rowError,"Media record error"));continue}
   ok++;
  }
  $("#webImageInput").value="";
@@ -66,12 +66,12 @@ async function loadMedia(){
  if(error){toast(supaError(error,"Media library error"));return}
  grid.innerHTML="";
  (data||[]).forEach(item=>{
-  const url=supa.storage.from(PIA_BUCKET).getPublicUrl(item.storage_path).data.publicUrl;
+  const url=supa.storage.from(NIHARIKA_BUCKET).getPublicUrl(item.storage_path).data.publicUrl;
   const card=document.createElement("article");card.className="media-card";
   card.innerHTML='<img alt=""><div class="media-meta"><strong></strong><span></span><div class="media-actions"><select class="slot-select">'+slotOptions(item.slot_key||"")+'</select><button class="publish">'+(item.is_published?"Published":"Publish")+'</button><button class="remove-block">Remove from block</button><button class="remove">Delete image</button></div></div>';
   card.querySelector("img").src=url;
-  card.querySelector("img").alt=item.title||"Pia photo";
-  card.querySelector("strong").textContent=item.title||"Pia photo";
+  card.querySelector("img").alt=item.title||"Niharika photo";
+  card.querySelector("strong").textContent=item.title||"Niharika photo";
   card.querySelector("span").textContent=item.is_published?"Live on website":"Synced draft · choose a block";
   card.querySelector(".slot-select").onchange=async ev=>{
    item.slot_key=ev.target.value;
@@ -89,13 +89,13 @@ async function loadMedia(){
    if(!item.slot_key){toast("Choose a website block before publishing.");return}
    const next=!item.is_published;
    const {error}=await supa.from("media").update({is_published:next,updated_at:new Date().toISOString()}).eq("id",item.id);
-   if(error)toast(supaError(error,"Publish error"));else{toast(next?"Published to Pia's website ✦":"Unpublished");loadMedia();}
+   if(error)toast(supaError(error,"Publish error"));else{toast(next?"Published to Niharika's website ✦":"Unpublished");loadMedia();}
   };
   card.querySelector(".remove").onclick=async()=>{
-   if(!confirm("Remove this synced image from Pia's website library?"))return;
+   if(!confirm("Remove this synced image from Niharika's website library?"))return;
    const {error}=await supa.from("media").delete().eq("id",item.id);
    if(error){toast(supaError(error,"Remove error"));return}
-   await supa.storage.from(PIA_BUCKET).remove([item.storage_path]);
+   await supa.storage.from(NIHARIKA_BUCKET).remove([item.storage_path]);
    toast("Synced image removed");loadMedia();
   };
   grid.appendChild(card);
