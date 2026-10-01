@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 public final class SupabaseApi {
     public static final String URL = "https://qcudkyyrhmnpuazlodyx.supabase.co";
     public static final String KEY = "sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
-    public static final String BUCKET = "pia-media";
+    public static final String BUCKET = "niharika-media";
 
     public static final class Session {
         public final String accessToken, refreshToken, userId;
