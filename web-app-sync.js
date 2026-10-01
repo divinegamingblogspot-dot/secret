@@ -1,7 +1,7 @@
-/* Pia Studio dual-client bridge: website + Android use the same Supabase media rows.
+/* Niharika Studio dual-client bridge: website + Android use the same Supabase media rows.
    Additive helper; does not replace existing admin.js/public-site logic. */
 (function(){
-  window.PiaMediaBridge={
+  window.NiharikaMediaBridge={
     version:"1.0.0",
     async published(supa,bucket){
       const {data,error}=await supa.from("media").select("id,slot_key,title,caption,media_type,storage_path,sort_order,is_featured").eq("is_published",true).order("sort_order",{ascending:true}).order("created_at",{ascending:false});
