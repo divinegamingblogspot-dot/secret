@@ -1,4 +1,4 @@
--- PIA WEBSITE BACKEND — run this later in the Supabase SQL editor
+-- NIHARIKA WEBSITE BACKEND — run this later in the Supabase SQL editor
 -- This file is intentionally separate from the public website.
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
