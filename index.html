@@ -181,7 +181,7 @@
    const el=bySlot.get(m.slot_key); if(!el||!m.storage_path)return;
    const host=el.dataset.photoSlot?el.querySelector(".block-photo"):el;
    if(!host)return;
-   const url=supa.storage.from("pia-media").getPublicUrl(m.storage_path).data.publicUrl;
+   const url=supa.storage.from("niharika-media").getPublicUrl(m.storage_path).data.publicUrl;
    host.querySelector(".niharika-media-img")?.remove();
    const img=document.createElement("img");
    img.className="niharika-media-img";
