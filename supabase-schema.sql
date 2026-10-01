@@ -2,8 +2,8 @@
 -- This file is intentionally separate from the public website.
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
-  display_name text not null default 'Pia',
-  instagram_url text default 'https://www.instagram.com/piaswami03/',
+  display_name text not null default 'Niharika',
+  instagram_url text default '',
   bio text default '',
   hero_line text default 'Her space. Her style. Her moments.',
   avatar_path text,
@@ -66,16 +66,16 @@ alter table public.media add column if not exists slot_key text not null default
 
 -- Storage: create a public bucket named pia-media in Dashboard > Storage.
 -- Authenticated owners are the only users allowed to write/delete their own folder.
-create policy "authenticated owners can upload Pia media" on storage.objects
+create policy "authenticated owners can upload Niharika media" on storage.objects
 for insert to authenticated
 with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
-create policy "authenticated owners can update Pia media" on storage.objects
+create policy "authenticated owners can update Niharika media" on storage.objects
 for update to authenticated
 using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text))
 with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
-create policy "authenticated owners can delete Pia media" on storage.objects
+create policy "authenticated owners can delete Niharika media" on storage.objects
 for delete to authenticated
 using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
