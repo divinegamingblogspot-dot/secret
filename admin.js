@@ -1,10 +1,10 @@
 const NIHARIKA_SUPABASE_URL="https://qcudkyyrhmnpuazlodyx.supabase.co";
 const NIHARIKA_SUPABASE_KEY="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
-const NIHARIKA_BUCKET="niharika-media";
+const NIHARIKA_BUCKET="pia-media";
 const SLOT_OPTIONS=[
 ["energy-soft","01 · Soft heart"],["energy-hot","01 · Hot energy"],["energy-sassy","01 · Sassy soul"],["energy-vibe","01 · Her own vibe"],
 ["memory-01","03 · Memory 01"],["memory-02","03 · Memory 02"],["memory-03","03 · Memory 03"],["memory-04","03 · Memory 04"],
-["favourite-frame","04 · Featured"],["that-outfit","04 · The look"],["latest-mood","04 · The smile"],["that-face","04 · The day"],["the-detail","04 · The detail"],["the-laugh","04 · The laugh"],["after-dark","04 · After dark"],["memory","04 · Memory"],["everyday","04 · Everyday"],["just-niharika","04 · Just Niharika"],
+["favourite-frame","04 · Featured"],["that-outfit","04 · The look"],["latest-mood","04 · The smile"],["that-face","04 · The day"],["the-detail","04 · The detail"],["the-laugh","04 · The laugh"],["after-dark","04 · After dark"],["memory","04 · Memory"],["everyday","04 · Everyday"],["just-pia","04 · Just Niharika"],
 ["notes-confidence","05 · Confidence"],["notes-sassy","05 · Sassy girl"],["notes-own","05 · Own it"],["notes-attitude","05 · The attitude"],["notes-worth","05 · Know your worth"],["notes-all","05 · All of you"],
 ["attitude-main","06 · Main character"],["attitude-dark","06 · After dark"],["attitude-unapologetic","06 · Unapologetic"],
 ["flower-softness","07 · Softness"],["flower-joy","07 · Joy"],["flower-confidence","07 · Confidence"],["flower-rest","07 · Rest"],["flower-being-you","07 · Being you"]
