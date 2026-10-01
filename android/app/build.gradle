@@ -1,9 +1,9 @@
 plugins { id 'com.android.application' }
 android {
-    namespace 'com.prince.piasync'
+    namespace 'com.prince.niharikasync'
     compileSdk 35
     defaultConfig {
-        applicationId 'com.prince.piasync'
+        applicationId 'com.prince.niharikasync'
         minSdk 26
         targetSdk 35
         versionCode 1
