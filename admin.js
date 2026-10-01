@@ -154,8 +154,13 @@ async function saveInitialAccountProfile(){
  if(!supa)return;
  const {data:{user}}=await supa.auth.getUser();
  if(!user)return;
- const email=$("#instagram");
- if(email && (!email.value || email.value==="@niharikaswami03")) email.value="@niharikaaaaaaaaa09";
+ const instagram="@niharikaaaaaaaaa09";
+ const field=$("#instagram");
+ if(field)field.value=instagram;
+ const {data:profile}=await supa.from("profiles").select("instagram_url").eq("id",user.id).maybeSingle();
+ if(!profile || profile.instagram_url!==instagram){
+   await supa.from("profiles").upsert({id:user.id,instagram_url:instagram,updated_at:new Date().toISOString()});
+ }
  refreshAccountLabel();
 }
 
