@@ -20,3 +20,15 @@
 .access-panel{border-color:rgba(193,77,120,.28);background:linear-gradient(135deg,rgba(193,77,120,.08),rgba(255,249,251,.82))}.access-state{padding:8px 11px;border-radius:999px;font-size:9px;letter-spacing:.14em;border:1px solid var(--line);color:var(--muted)}.access-state.connected{color:var(--accent);border-color:rgba(193,77,120,.35)}.access-actions{display:flex;gap:10px;flex-wrap:wrap}.access-actions button:disabled{opacity:.45;cursor:not-allowed}.access-help{font-size:10px!important;margin:14px 0 0}@media(max-width:520px){.access-actions{display:grid}.access-actions button{width:100%}}
 
 .media-actions{flex-wrap:wrap}.media-actions .remove-block{border-color:rgba(193,77,120,.3);color:var(--accent)}
+
+
+.security-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.security-card{padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+.security-kicker{font-size:9px;letter-spacing:.2em;color:var(--accent)}
+.security-card h3{font-size:23px;margin:8px 0}
+.security-card p{font-size:11px!important;margin:0 0 16px}
+.security-card label{display:block;font-size:10px;color:var(--muted);margin-top:10px}
+.security-card input{display:block;width:100%;margin-top:7px;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface2);color:var(--fg);outline:none}
+.security-card .secondary{margin-top:13px}
+.security-warning{background:linear-gradient(135deg,rgba(193,77,120,.07),var(--surface))}
+@media(max-width:700px){.security-grid{grid-template-columns:1fr}}
