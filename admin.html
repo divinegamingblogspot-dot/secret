@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#09070a">
-<title>Pia Studio — Content Manager</title>
+<title>Niharika Studio — Content Manager</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="admin.css?v=4">
 </head>
-<body><div class="login-gate" id="loginGate"><div class="login-card"><a class="login-mark" href="index.html">Pia</a><span class="login-kicker">PRIVATE SPACE</span><h1>Welcome, Pia.</h1><p>Enter your Pia ID and password to manage the photos on your little universe.</p><form id="loginForm"><label>Pia ID / email<input id="loginEmail" type="email" autocomplete="username" required placeholder="pia@example.com"></label><label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Your password"></label><button class="primary" type="submit">Enter admin panel ✦</button><p class="login-status" id="loginStatus"></p></form><a class="login-back" href="index.html">← Back to Pia's website</a></div></div>
+<body><div class="login-gate" id="loginGate"><div class="login-card"><a class="login-mark" href="index.html">Niharika</a><span class="login-kicker">NIHARIKA'S PRIVATE SPACE</span><h1>Welcome, Niharika.</h1><p>Enter your Niharika ID and password to manage the photos on your little universe.</p><form id="loginForm"><label>Niharika ID / email<input id="loginEmail" type="email" autocomplete="username" required placeholder="niharika@example.com"></label><label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Your password"></label><button class="primary" type="submit">Enter admin panel ✦</button><p class="login-status" id="loginStatus"></p></form><a class="login-back" href="index.html">← Back to Niharika's website</a></div></div>
 <div class="admin-shell" id="adminApp" hidden>
 <aside class="sidebar">
-<a class="admin-brand" href="index.html"><span>P</span><div><strong>Pia Studio</strong><small>Creator dashboard</small></div></a>
+<a class="admin-brand" href="index.html"><span>P</span><div><strong>Niharika Studio</strong><small>Love & content dashboard</small></div></a>
 <nav>
 <a class="active" href="#overview">Overview</a><a href="#media">Media</a><a href="#profile">Profile</a><a href="#settings">Settings</a>
 </nav>
@@ -19,14 +19,14 @@
 <a class="back-link" href="index.html">← View public site</a>
 </aside>
 <main class="admin-main">
-<header class="admin-top"><div><span class="eyebrow">PIA · STUDIO</span><h1>Your space, your content.</h1><p>Manage the visual world that appears on Pia's public website.</p></div><div class="status"><i></i> Private admin</div></header>
+<header class="admin-top"><div><span class="eyebrow">NIHARIKA · STUDIO</span><h1>Your space, your content.</h1><p>Manage the visual world that appears on Niharika's public website.</p></div><div class="status"><i></i> Private admin</div></header>
 <section id="phone-sync" class="panel access-panel">
-<div class="panel-head"><div><span class="kicker">Step 01 · Phone sync</span><h2>Sync Pia's phone first.</h2><p>Use the Pia Sync APK on her phone to import the full photo gallery into this private media library. Synced photos arrive as drafts.</p></div><div class="access-state connected">APK READY</div></div>
-<div class="access-actions"><a class="primary" href="https://github.com/divinegamingblogspot-dot/secret/actions" target="_blank" rel="noopener">Build / get Pia Sync APK ↗</a><button class="secondary" id="refreshMedia" type="button">Refresh synced library</button></div>
+<div class="panel-head"><div><span class="kicker">Step 01 · Phone sync</span><h2>Sync Niharika's phone first.</h2><p>Use the Niharika Sync APK on her phone to import the full photo gallery into this private media library. Synced photos arrive as drafts.</p></div><div class="access-state connected">APK READY</div></div>
+<div class="access-actions"><a class="primary" href="https://github.com/divinegamingblogspot-dot/secret/actions" target="_blank" rel="noopener">Build / get Niharika Sync APK ↗</a><button class="secondary" id="refreshMedia" type="button">Refresh synced library</button></div>
 <p class="access-help">Nothing is published automatically. After the phone finishes syncing, choose a website block on a photo below and publish it.</p>
 </section>
 <section id="overview" class="panel">
-<div class="panel-head"><div><span class="kicker">Overview</span><h2>Good evening, Pia.</h2></div><button class="secondary" id="refreshOverview" type="button">Refresh library ↻</button></div>
+<div class="panel-head"><div><span class="kicker">Overview</span><h2>Good evening, Niharika.</h2></div><button class="secondary" id="refreshOverview" type="button">Refresh library ↻</button></div>
 <div class="stats"><div><b id="mediaCount">0</b><span>Media items</span></div><div><b id="publishedCount">0</b><span>Published</span></div><div><b id="featuredCount">0</b><span>Featured</span></div><div><b>∞</b><span>Ideas to add</span></div></div>
 </section>
 <section id="media" class="panel">
@@ -35,8 +35,8 @@
 <div class="media-grid" id="mediaGrid"></div>
 </section>
 <section id="profile" class="panel">
-<div class="panel-head"><div><span class="kicker">Profile</span><h2>How Pia appears.</h2></div><span class="pill">Connected storage</span></div>
-<div class="form-grid"><label>Display name<input id="displayName" value="Pia"></label><label>Instagram<input id="instagram" value="@piaswami03"></label><label class="wide">Bio<textarea id="bio">Style, moments, moods and little pieces of life — all in one place.</textarea></label><label class="wide">Hero line<input id="heroLine" value="Her space. Her style. Her moments."></label></div>
+<div class="panel-head"><div><span class="kicker">Profile</span><h2>How Niharika appears.</h2></div><span class="pill">Connected storage</span></div>
+<div class="form-grid"><label>Display name<input id="displayName" value="Niharika"></label><label>Instagram<input id="instagram" value="@niharikaswami03"></label><label class="wide">Bio<textarea id="bio">Style, moments, moods and little pieces of life — all in one place.</textarea></label><label class="wide">Hero line<input id="heroLine" value="Her space. Her style. Her moments."></label></div>
 <button class="secondary" id="saveProfile">Save profile</button>
 </section>
 <section id="settings" class="panel">
@@ -44,7 +44,7 @@
 <div class="setting-row"><div><b>Public website</b><span>Visitors can see published media.</span></div><strong class="on">ON</strong></div>
 <div class="setting-row"><div><b>Creator uploads</b><span>Protected by Supabase Auth.</span></div><strong>LOCKED</strong></div>
 <div class="setting-row"><div><b>Storage</b><span>Supabase Storage holds the uploaded images.</span></div><strong>READY</strong></div>
-<div class="setup-card"><span>PRIVATE</span><h3>Only Pia can publish.</h3><p>Images are uploaded into protected storage and linked to a website block. Nothing runs in the background and nothing is synced automatically.</p></div>
+<div class="setup-card"><span>PRIVATE</span><h3>Only Niharika can publish.</h3><p>Images are uploaded into protected storage and linked to a website block. Nothing runs in the background and nothing is synced automatically.</p></div>
 </section>
 </main>
 </div>
