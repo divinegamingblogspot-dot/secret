@@ -1,6 +1,6 @@
 const NIHARIKA_SUPABASE_URL="https://qcudkyyrhmnpuazlodyx.supabase.co";
 const NIHARIKA_SUPABASE_KEY="sb_publishable_F3J_f_9ebNPs6eY3dSaisA_r4LqLcmw";
-const NIHARIKA_BUCKET="pia-media";
+const NIHARIKA_BUCKET="niharika-media";
 const SLOT_OPTIONS=[
 ["energy-soft","01 · Soft heart"],["energy-hot","01 · Hot energy"],["energy-sassy","01 · Sassy soul"],["energy-vibe","01 · Her own vibe"],
 ["memory-01","03 · Memory 01"],["memory-02","03 · Memory 02"],["memory-03","03 · Memory 03"],["memory-04","03 · Memory 04"],
