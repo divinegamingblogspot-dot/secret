@@ -56,7 +56,7 @@ with check (auth.uid() = id);
 create policy "owner can update profile" on public.profiles for update to authenticated
 using (auth.uid() = id) with check (auth.uid() = id);
 
--- Storage bucket should be created in the Dashboard as: pia-media
+-- Storage bucket should be created in the Dashboard as: niharika-media
 -- Then add Storage policies restricting insert/update/delete to authenticated users
 -- whose folder prefix matches auth.uid().
 
@@ -64,20 +64,20 @@ using (auth.uid() = id) with check (auth.uid() = id);
 -- Run once after the table exists if you are upgrading an older schema:
 alter table public.media add column if not exists slot_key text not null default '';
 
--- Storage: create a public bucket named pia-media in Dashboard > Storage.
+-- Storage: create a public bucket named niharika-media in Dashboard > Storage.
 -- Authenticated owners are the only users allowed to write/delete their own folder.
 create policy "authenticated owners can upload Niharika media" on storage.objects
 for insert to authenticated
-with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+with check (bucket_id = 'niharika-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
 create policy "authenticated owners can update Niharika media" on storage.objects
 for update to authenticated
-using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text))
-with check (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+using (bucket_id = 'niharika-media' and (storage.foldername(name))[1] = (select auth.uid()::text))
+with check (bucket_id = 'niharika-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
 create policy "authenticated owners can delete Niharika media" on storage.objects
 for delete to authenticated
-using (bucket_id = 'pia-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
+using (bucket_id = 'niharika-media' and (storage.foldername(name))[1] = (select auth.uid()::text));
 
 -- Data API table grants: RLS controls rows, these grants allow the API roles to access the tables.
 grant select on public.media to anon, authenticated;
