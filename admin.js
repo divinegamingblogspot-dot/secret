@@ -159,7 +159,6 @@ async function saveInitialAccountProfile(){
  refreshAccountLabel();
 }
 
-};
 const signout=document.createElement("button");
 signout.className="secondary";signout.textContent="Sign out";
 signout.onclick=()=>supa?.auth.signOut();
