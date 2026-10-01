@@ -1,4 +1,4 @@
-package com.prince.piasync;
+package com.prince.niharikasync;
 
 import org.json.*;
 import java.io.*;
