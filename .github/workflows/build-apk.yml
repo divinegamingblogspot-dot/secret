@@ -1,4 +1,4 @@
-name: Build Pia Admin APK
+name: Build Niharika Sync APK
 on:
   workflow_dispatch:
   push:
@@ -23,5 +23,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: pia-admin-apk
+          name: niharika-sync-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
