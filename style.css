@@ -273,9 +273,9 @@ body.moonlight-mode #moonlight{background:var(--theme-deep);color:var(--bg);bord
 /* Published Niharika images control the block's actual height.
    The image is never cropped; the slot follows its natural aspect ratio. */
 [data-slot].has-niharika-media,
-[data-photo-slot].has-niharika-media{--pia-ratio:1;transition:height .4s var(--ease),min-height .4s var(--ease)}
-[data-photo-slot].has-niharika-media .block-photo{height:auto;min-height:0;aspect-ratio:var(--pia-image-ratio,auto)}
+[data-photo-slot].has-niharika-media{--niharika-ratio:1;transition:height .4s var(--ease),min-height .4s var(--ease)}
+[data-photo-slot].has-niharika-media .block-photo{height:auto;min-height:0;aspect-ratio:var(--niharika-image-ratio,auto)}
 [data-photo-slot].has-niharika-media .niharika-media-img{width:100%;height:100%;max-height:none;object-fit:contain}
-[data-slot].has-niharika-media.niharika-media-loaded>.niharika-media-img{height:auto;max-height:none;aspect-ratio:var(--pia-ratio);object-fit:contain}
+[data-slot].has-niharika-media.niharika-media-loaded>.niharika-media-img{height:auto;max-height:none;aspect-ratio:var(--niharika-ratio);object-fit:contain}
 .photo.has-niharika-media{height:auto;min-height:0}
-.photo.has-niharika-media .niharika-media-img{height:auto;max-height:none;aspect-ratio:var(--pia-ratio);object-fit:contain}
+.photo.has-niharika-media .niharika-media-img{height:auto;max-height:none;aspect-ratio:var(--niharika-ratio);object-fit:contain}
