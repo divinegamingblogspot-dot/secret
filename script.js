@@ -1,8 +1,8 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const toast=m=>{const t=$("#toast");if(!t)return;t.textContent=m;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2600)};
 window.addEventListener("load",()=>setTimeout(()=>$("#loader")?.classList.add("done"),1500));
-const themes=["rose","lavender","mint","peach"];let themeIndex=Number(localStorage.getItem("niharikaTheme")||0);if(!Number.isFinite(themeIndex)||themeIndex>=themes.length)themeIndex=0;
-function setTheme(n){themeIndex=(n+themes.length)%themes.length;document.documentElement.dataset.theme=themes[themeIndex];localStorage.setItem("niharikaTheme",themeIndex);toast(["Rose light ✦","Lavender light ✦","Mint light ✦","Peach light ✦"][themeIndex])}
+const themes=["rose","blush","lavender","lilac","mint","sage","peach","cream","sky"];let themeIndex=Number(localStorage.getItem("niharikaTheme")||0);if(!Number.isFinite(themeIndex)||themeIndex>=themes.length)themeIndex=0;
+function setTheme(n){themeIndex=(n+themes.length)%themes.length;document.documentElement.dataset.theme=themes[themeIndex];localStorage.setItem("niharikaTheme",themeIndex);toast(["Rose ✦","Blush ✦","Lavender ✦","Lilac ✦","Mint ✦","Sage ✦","Peach ✦","Warm Cream ✦","Soft Sky ✦"][themeIndex])}
 $("#theme")?.addEventListener("click",()=>setTheme(themeIndex+1));document.documentElement.dataset.theme=themes[themeIndex];
 const nav=$("#nav");window.addEventListener("scroll",()=>nav?.classList.toggle("scrolled",scrollY>20),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.08});$$(".reveal").forEach(x=>io.observe(x));
